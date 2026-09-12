@@ -60,6 +60,13 @@ Se construye de arriba hacia abajo; se corta desde abajo sin negociar:
 
 ## Cómo trabajar en este repo
 
+- **Rebanada vertical antes de generalizar.** Un caso completo de punta a punta —una
+  misión, un slot, un producto, una tarjeta renderizada con datos reales— antes de
+  escribir el segundo de cualquier cosa. Los bugs viven en las costuras entre capas, no
+  dentro de ellas. Y el primer ejemplo real es el molde del que se copia todo lo demás:
+  si la primera tarjeta maneja bien `Signal[T]`, el badge de `SIMULATED` y el estado
+  "sin respaldo documental", las siguientes salen casi solas.
+
 - Después de cada bloque, **correr el código y mirar la salida real**. No leer el diff y
   asumir.
 - Los tests del motor (`tests/test_scoring.py`) son la red de seguridad: un bug de

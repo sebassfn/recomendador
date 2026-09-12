@@ -75,28 +75,64 @@ principal tampoco llega: doc 06 §R6, extracción manual de un subconjunto.
 sigue. Una app con 200 productos bien mapeados demuestra más que una con 200 000 que
 no se alcanzó a mostrar.
 
-### T+1:30 – 1:45 · 🚀 DEPLOY DE HUMO
+### T+1:30 – 2:00 · 🚀 REBANADA VERTICAL + DEPLOY DE HUMO
 
-Con la app semi-vacía y el `catalog.db` real horneado: `./deploy.sh`. Abrir la URL en
-el celular.
+**Una sola ruta completa de punta a punta, ridículamente estrecha, con datos reales.**
+No es la app a medias: es un camino de un solo carril que atraviesa todas las capas.
 
-**Este bloque no se salta jamás.** Su propósito es descubrir a la hora y media —
-cuando hay 4 horas y media de margen — cualquier problema de imagen, tamaño,
-permisos, puerto o variable de entorno. Descubrirlos a T+5:00 es fatal; a T+1:45 son
-15 minutos.
+```
+MissionPlan escrito a mano (JSON, sin LLM)
+        ↓
+    1 BasketSlot
+        ↓
+    1 consulta SQL real contra catalog.db          ← datos reales, no fixtures
+        ↓
+    1 ScoredProduct con score calculado de verdad  ← el motor, aunque sea con 2 señales
+        ↓
+    1 tarjeta Jinja renderizada: precio, badge de disponibilidad,
+      cita o "sin respaldo documental", badge de señal si aplica
+        ↓
+    ./deploy.sh → abrir la URL EN EL CELULAR
+```
+
+Todo lo demás queda en stub. **La regla es que nada se saltee una capa**: si el precio
+llega a la tarjeta sin pasar por `Price.effective_amount`, la rebanada no sirve.
+
+**Por qué este bloque existe, y son tres razones distintas:**
+
+1. **Valida la infraestructura.** Imagen, tamaño, puerto, permisos de IAM, variables de
+   entorno. Descubrirlo a las dos horas cuesta 15 minutos; a T+5:00 cuesta la prueba.
+2. **Valida que el diseño aguanta.** Los bugs no viven dentro de las capas, viven en las
+   **costuras** entre ellas. Construir capa por capa significa no tocar ninguna costura
+   hasta T+3:15 — y ahí quedan 75 minutos hasta el freeze. Acá las tocás todas con dos
+   horas y media de margen.
+3. **Le deja el molde al agente.** Claude Code escribe la tarjeta nº 2 mirando la nº 1.
+   Si esta primera maneja bien `Signal[T]`, el badge de `SIMULATED` y el estado "sin
+   respaldo documental", las veinte siguientes salen casi solas. Si sale a medias,
+   **replicás el error veinte veces**. Es el bloque con más apalancamiento del día.
+
+**Salida obligatoria:** una URL pública que, abierta desde el celular, muestra **un
+producto real del dataset de la prueba** con su precio y su respaldo.
+
+> Los 15 minutos extra sobre el deploy de humo original salen del excedente del agente
+> (§3). Es la mejor inversión de ese excedente que hay en todo el plan.
 
 **🔴 CORTE T+2:00:** si el deploy no funciona a las dos horas, **se abandona Cloud Run**
 y se cambia a túnel (Cloudflare Tunnel / ngrok), que da URL pública en 3 minutos. El
 jurado igual abre desde su celular; nadie pregunta dónde corre.
 
-### T+1:45 – 2:45 · Motor conectado
+> **No corras `/init`.** Genera un `CLAUDE.md` leyendo el código, y te sobreescribiría el
+> que escribiste a mano — que codifica lo que **no** se puede derivar del código: la regla
+> de degradación, el orden de sacrificio, el freeze, las prohibiciones.
 
-Cablear el motor pre-construido contra `catalog.db`: filtro duro con los criterios que
-sobrevivieron al mapeo, candidate set por slot, scoring, renormalización de pesos
-según cobertura real.
+### T+2:00 – 2:45 · Motor completo
+
+La rebanada ya probó el camino con un slot y dos señales. Acá se **ensancha**: todos los
+criterios del filtro duro que sobrevivieron al mapeo, candidate set por slot, todas las
+señales vivas, y la renormalización de pesos según cobertura real.
 
 **Salida obligatoria:** un script que, dado un `MissionPlan` escrito a mano, imprime la
-canasta rankeada en consola. **Sin UI todavía.**
+canasta **multi-slot y cross-categoría** rankeada en consola.
 
 **🔴 CORTE T+2:45:** si el motor no rankea, se apaga el scoring multi-señal y se ordena
 sólo por relevancia. El Modo Negocio pasa a mostrar las señales **sin** poder
@@ -116,6 +152,7 @@ las 3 semillas se escriben a mano en JSON. **La demo no depende del LLM ni un se
 En este orden estricto, cortando desde abajo cuando se acabe el tiempo:
 
 1. P2 canasta con `SlotCard` + `CitationBlock` — **35 min**
+   *(parte del molde de tarjeta que dejó la rebanada vertical: ensanchar, no empezar)*
 2. P1 entrada + chips semilla — **15 min**
 3. `BasketSummary` + uplift — **10 min**
 4. **Modo Negocio** (toggle + 3 sliders + breakdown) — **35 min**
@@ -173,7 +210,7 @@ Repasar las 8 preguntas del doc 04 §5, en particular **la del ML**.
 | T+0:45 | Plantilla de mapeo incompleta | Se congela. Filas vacías = degradaciones. |
 | T+1:15 | < 50 productos canónicos válidos | Se abandona el insumo secundario. |
 | T+1:30 | Adaptador sin terminar | Se congela con lo que produzca. |
-| T+2:00 | Cloud Run no despliega | Se cambia a túnel. Cloud Run se abandona. |
+| T+2:00 | Cloud Run no despliega, o la rebanada vertical no renderiza un producto real | Se cambia a túnel. Si es la rebanada la que falla, **se para todo y se arregla**: es el síntoma de que una costura del diseño no cierra. |
 | T+2:45 | Motor no rankea | Sólo relevancia; Modo Negocio pasa a solo lectura. |
 | T+3:15 | LLM inconsistente | Fallback por keywords + 3 semillas en JSON. |
 | T+3:30 | Fitment no valida | Degrada a coincidencia textual (doc 06 §R4). |
@@ -190,8 +227,9 @@ agente es el plan B del plan con agente (doc 07 §7.2): si se cae la red o se ag
 cuota a T+2:30, no hay nada que rehacer.
 
 La compresión real es de **45–60 min, casi toda en UI** — el triage, el mapeo, el deploy
-y el ensayo no se comprimen nada. Ese excedente va, en orden: comparador lado a lado
-(30 min), pantalla de diagnóstico (20 min), y después **ensayo, no features**.
+y el ensayo no se comprimen nada. Ese excedente va, en orden: **los 15 min extra de la rebanada
+vertical de T+1:30** (la mejor inversión del día), comparador lado a lado (30 min),
+pantalla de diagnóstico (20 min), y después **ensayo, no features**.
 
 **El FEATURE FREEZE sigue a T+4:30.** Escribir más rápido no mueve el freeze: existe por
 riesgo, no por productividad.
@@ -206,8 +244,8 @@ riesgo, no por productividad.
    mitiga el corte de T+1:15, que hay que respetar aunque duela.
 2. **La UI se come el Modo Negocio.** Por eso el Modo Negocio va **antes** que el
    responsive, el detalle y el diagnóstico: es lo que diferencia esta entrega.
-3. **El deploy final descubre un problema nuevo.** Por eso existe el deploy de humo a
-   T+1:45 con el `catalog.db` real, no con datos falsos.
+3. **El deploy final descubre un problema nuevo.** Por eso existe la rebanada vertical a
+   T+2:00 con el `catalog.db` real, no con datos falsos.
 
 **El escenario realista, no el optimista:** entran la canasta cross-categoría con
 citas, el Modo Negocio, el responsive y el deploy. **No entran** el comparador lado a

@@ -231,8 +231,8 @@ El error sería asumir que todo se acelera parejo. No es así, y la diferencia i
 |---|---|---|
 | T+0:00–0:45 triage y mapeo | **0 %** | Es criterio, no tipeo. Decidir que `precio_lista` es el precio y no `precio_sugerido` no lo hace el agente. |
 | T+0:45–1:30 adaptador | ~20 % | Escribe el pandas rápido, pero **vos** decidís cada fila de la plantilla de mapeo. |
-| T+1:30–1:45 deploy de humo | **0 %** | Es esperar builds y pushes. |
-| T+1:45–2:45 motor | ~40 % | Está pre-construido; es cableado. |
+| T+1:30–2:00 rebanada vertical | ~10 % | Casi todo es esperar builds. **Es el bloque de más apalancamiento: la tarjeta que sale acá es el molde que el agente copia 20 veces.** |
+| T+2:00–2:45 motor | ~40 % | Está pre-construido; es cableado. |
 | T+2:45–3:15 intérprete | ~30 % | El prompt está pre-escrito. |
 | T+3:15–4:30 UI | **~50 %** | Jinja + Tailwind + HTMX es donde más rinde. |
 | T+4:30–6:00 deploy, respaldo, ensayo | **0 %** | Nada de esto es código. |
@@ -270,7 +270,7 @@ No todo es ganancia, y conviene tenerlo escrito:
   agente va a asumir cosas sobre los datos que no son ciertas. Por eso el bloque de
   adaptación comprime sólo un 20 %: el cuello de botella es verificar, no escribir.
 - **Regla:** después de cada bloque, correr el código y **mirar la salida real** —
-  no leer el diff y asumir. El script de consola del bloque T+1:45 existe para eso.
+  no leer el diff y asumir. La rebanada vertical de T+1:30 existe para eso.
 - **Los tests del §4 valen el doble acá.** Un bug de renormalización escrito por un
   agente es tan silencioso como uno escrito por vos, y lo revisás con menos desconfianza.
 

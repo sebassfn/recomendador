@@ -239,7 +239,7 @@ interpretación en frases no vistas.
 
 | Riesgo | Mitigación | Costo |
 |---|---|---|
-| Cloud Run no despliega (IAM, cuota, API sin habilitar) | Deploy de prueba **el día anterior** + deploy de humo a T+1:45. Corte a T+2:00 → túnel. | 0 (preventivo) |
+| Cloud Run no despliega (IAM, cuota, API sin habilitar) | Deploy de prueba **el día anterior** + rebanada vertical desplegada a T+2:00. Corte → túnel. | 0 (preventivo) |
 | Cold start en la demo | `min-instances=1` desde 30 min antes; abrir la URL uno mismo justo antes. | 2 min |
 | Imagen demasiado grande | `python:3.12-slim`, `uv sync --no-dev`, `.dockerignore` con los insumos crudos. `catalog.db` ≤ 50 MB. | 0 (preventivo) |
 | Caída de wifi durante la demo | 6 capturas en `respaldo/` + copia local en pestaña de respaldo. | 15 min (bloque T+5:00) |
