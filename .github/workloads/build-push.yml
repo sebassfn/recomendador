@@ -1,0 +1,51 @@
+name: Build and Push Container
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-push:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Descargar codigo
+        uses: actions/checkout@v7
+
+      - name: Autenticarse en Google Cloud
+        uses: google-github-actions/auth@v3
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: Instalar Google Cloud CLI
+        uses: google-github-actions/setup-gcloud@v3
+
+      - name: Login Artifact Registry
+        run: |
+          gcloud auth print-access-token | \
+          docker login \
+            -u oauth2accesstoken \
+            --password-stdin \
+            ${{ vars.GCP_REGION }}-docker.pkg.dev
+
+      - name: Construir imagen
+        run: |
+          docker build \
+            -t "${{ vars.GCP_REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.GAR_REPOSITORY }}/${{ vars.IMAGE_NAME }}:latest" \
+            .
+
+      - name: Subir imagen
+        run: |
+          docker push \
+            "${{ vars.GCP_REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.GAR_REPOSITORY }}/${{ vars.IMAGE_NAME }}:latest"
+
+      - name: Desplegar en Cloud Run
+        run: |
+          gcloud run deploy "${{ vars.CLOUD_RUN_SERVICE }}" \
+            --image "${{ vars.GCP_REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.GAR_REPOSITORY }}/${{ vars.IMAGE_NAME }}:latest" \
+            --region "${{ vars.GCP_REGION_CLOUD_RUN }}" \
+            --port 8000 \
+            --allow-unauthenticated \
+            --platform managed

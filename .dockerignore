@@ -30,3 +30,6 @@ __pycache__
 Dockerfile
 .dockerignore
 deploy.sh
+
+# Credecniales JSOn de Google Cloud Platform (GCP) para el servicio de agentesia.
+agentesia-508201-1dfc221fa1e5.json

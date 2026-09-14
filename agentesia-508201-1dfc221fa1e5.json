@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "agentesia-508201",
+  "private_key_id": "1dfc221fa1e59cf8afcf2a8c27fbfd0298081a16",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEugIBADANBgkqhkiG9w0BAQEFAASCBKQwggSgAgEAAoIBAQD0J8dfKijIDu94\nLNYANdTSYMkvH5Gw3tW+B7adu3BZMxegohM+p2PG4XPATiqnoGKO2S606sSk9I8/\nLTemOTVaS1GqABRrs7WJe+a0OETbAs2D0oaecSENsAZoi+JvqVQXQfWVNKS60hNW\nuOvbH2emf3etqEes3UcvrlZ8d/AWMrAOJLdI8v3RZFsgvaYsAnCr+Yw6hvs6jsMw\n/mBPHayDsgRwWJmqzbiAFGB38qFyB6+QXn4cWSkT/CjLw1SvpqbSUOKXt+dAj8Tn\nHYla1+3lqE8gD+MWUrSthREOEL30AeP3AsKveYv9EFTcZh7C9SR+n8+h4raNF3+T\no9YQYCfhAgMBAAECgf9sFCC8cJpgqaVI0Sa9ACZqRaoUhOyIV4WCvwV5kQ65uPrT\nKDcRX3E8kRf/EECza8v46JRigcZ7mTAqZVnMFZYIiBKl6p9bwoRWIyDmeREvDxYX\nxHul1LmnXQCmZQmTvqTrxNYIENS8z1/POJQ+ghlYZhSq4WJChTkFYlvmkCIoRx8r\ntlgTsgw9Ur2PdAQPG9KrA/qzK4qZ0qA87RXUjNZYx0tsftrPiayZO1JqumNnGhxx\n0VvTTe5t0vM9IBPQ/CQ9m1vAo7bEwkSEHk+SHTTz/ASD0AlsEIZkay7rXXL1cIaw\nhLG9V524Px/fxtN72WOL8ah8IhDqX88DOk10nCMCgYEA/ecrJuJeepF+6sGGflAg\nzrBrT4uJULMRbI1sMlx/jnbkwunundmTD4q/iBTLKtw6S1novfgo6ZBmP9M0cTMq\nWQ251G1MOJJXCOgcEi4Gsqc8bizW+RY50yiC1AYvh3/uXFi+iTUCbqfLZ0IxAk5I\n16o/MWo5bZ59DvSJYq0bC6sCgYEA9iwALL/J2XA5mW4gQqx+K59vAkJ8fWa1XjV+\nDFjU0azuOUtbM8zjMLkU+ZrJKEl7kgTKC1yxscxLPJyyt6I3bq20VOlg/p5FRsUP\naSCP9Nz7/ZaFVpE+JDEWVR3DR2U+4kkN3zMGOUxHEu+K5nK/uRljrULUfWCvhu+M\nas0tLqMCgYA8tGlvyY2XNnQmwpBaYOQHJszxXsY84iNXVdS5kb35nNmC9JVVbjCn\n9Z9ndLlCjRbu7xcjXFLDzP91YRTXv8jvM8XrURp5KBvhCEW13wVA75UWLmhTc4nt\nv3DQKo5wkhi2QY2EloT3WezaykuXZoop7g1fzire15bE3Zh/XC3sMwKBgD8v8COM\nXw1XBxHg+Jrkl8YuuFnGIxo1INy7sk0NCCOB1ewS8agMMUyyVTX0iymyIuvKGupr\nspjGrZEzT5RfKQdZwu4AsYrpqTKPJnN/jjP1/SCMYFFmGqNDjk3uw88xp8CBq/Pc\nrv5KG/w6TFb2oUurvrAcdVpxVNy35D0NyUktAoGAJGh8iNBD26/vojWYh+OaGt5j\nlTJeQBBrYf4VixY9sRCon+UKKKU9IT414jVqloY/FIlqyp7DjbD21H+IP/LHkxjl\nFDxNfHRqH3TkHpRnXdlEWW+YQCpz4j+9Ywtd9uWMY6CNsceBmI4NBuWe+r/2yj9z\n0mdxW/iQIe4e7+d1EI8=\n-----END PRIVATE KEY-----\n",
+  "client_email": "github-cicd@agentesia-508201.iam.gserviceaccount.com",
+  "client_id": "104056539517595327033",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/github-cicd%40agentesia-508201.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
