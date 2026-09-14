@@ -1,0 +1,53 @@
+{#- Único target de HTMX. Recibe `vm` = AdvisorVM. Dos columnas en desktop
+    (conversación + recomendaciones | carrito sticky); una en móvil, con el
+    carrito como hoja inferior desplegable. -#}
+<div class="md:grid md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] md:gap-6 md:items-start">
+
+  <main class="space-y-4 min-w-0">
+    {% for notice in vm.notices %}
+      <p class="text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">{{ notice }}</p>
+    {% endfor %}
+
+    {% include "partials/conversation.html" %}
+    {% include "partials/understanding_chips.html" %}
+
+    {% if vm.groups %}
+    <section class="space-y-4">
+      <h2 class="text-lg font-semibold">Mis recomendaciones para ti</h2>
+      {% for group in vm.groups %}
+        {% include "partials/recommendation_group.html" %}
+      {% endfor %}
+    </section>
+    {% endif %}
+
+    {% with actions = vm.refine_actions %}
+      <section class="bg-white rounded-2xl border border-slate-200 p-4">
+        <p class="font-medium">💡 ¿Quieres que lo ajuste?</p>
+        <p class="text-sm text-slate-500 mb-3">Puedo modificar la selección según tus preferencias.</p>
+        {% include "partials/quick_actions.html" %}
+      </section>
+    {% endwith %}
+
+    {% include "partials/turn_input.html" %}
+  </main>
+
+  {# Carrito — desktop: columna lateral sticky #}
+  <aside class="hidden md:block md:sticky md:top-4 md:max-h-[calc(100vh-2rem)] md:overflow-y-auto">
+    {% include "partials/cart_panel.html" %}
+  </aside>
+
+  {# Carrito — móvil: barra fija abajo que se despliega. Sin JS: <details>. #}
+  <details class="md:hidden fixed bottom-0 inset-x-0 z-20 bg-white border-t border-slate-200 shadow-[0_-4px_12px_rgba(0,0,0,0.08)]">
+    <summary class="list-none cursor-pointer px-4 py-3 min-h-[56px] flex items-center justify-between gap-3">
+      <span class="flex items-center gap-2 font-medium whitespace-nowrap">
+        🛒 {{ vm.cart.items_count }} ítem{{ '' if vm.cart.items_count == 1 else 's' }} · {{ vm.cart.subtotal.display }}
+      </span>
+      <span class="text-sm text-right whitespace-nowrap {{ 'text-red-700 font-medium' if vm.cart.budget.is_over else 'text-emerald-700' }}">
+        {% if vm.cart.budget.has_budget %}{{ vm.cart.budget.short_message }} ▴{% else %}Ver carrito ▴{% endif %}
+      </span>
+    </summary>
+    <div class="max-h-[75vh] overflow-y-auto px-2 pb-4">
+      {% include "partials/cart_panel.html" %}
+    </div>
+  </details>
+</div>

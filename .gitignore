@@ -1,3 +1,7 @@
 .env
 
 *.pyc
+__pycache__/
+
+# catalog.db se genera (ETL o scripts/seed_catalog.py), no se versiona.
+catalog.db

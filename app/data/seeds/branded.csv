@@ -1,0 +1,63 @@
+family_id,subcategory,brand,name,unit,pack_size,units_per_pack,base_price,margin_pct,turnover_index,promo_pct,keywords
+001,bebidas,Coca-Cola,Gaseosa cola botella 500ml,ml,500,1,1.25,0.28,9.6,0.00,gaseosa cola refresco bebida
+002,bebidas,Coca-Cola,Gaseosa cola botella 1.5L,L,1.5,1,2.50,0.30,9.2,0.08,gaseosa cola familiar refresco
+003,bebidas,Coca-Cola,Gaseosa cola botella 3L,L,3,1,3.75,0.31,8.9,0.10,gaseosa cola familiar fiesta
+004,bebidas,Coca-Cola,Gaseosa cola sin azúcar botella 1.5L,L,1.5,1,2.60,0.29,8.7,0.05,gaseosa cola zero sin azucar
+005,bebidas,Inca Kola,Gaseosa sabor original botella 1.5L,L,1.5,1,2.50,0.27,8.8,0.06,gaseosa amarilla refresco familiar
+006,bebidas,Inca Kola,Gaseosa sabor original botella 3L,L,3,1,3.80,0.30,8.4,0.09,gaseosa amarilla refresco fiesta
+007,bebidas,Pepsi,Gaseosa cola botella 1.5L,L,1.5,1,2.35,0.26,8.5,0.07,gaseosa cola refresco familiar
+008,snacks,Oreo,Galleta chocolate paquete individual,g,36,1,0.65,0.25,8.7,0.00,galleta dulce chocolate crema lonchera
+009,snacks,Oreo,Galleta chocolate paquete x6,g,36,6,3.40,0.29,8.3,0.08,galleta dulce chocolate pack lonchera
+010,snacks,Oreo,Galleta chocolate paquete x12,g,36,12,6.25,0.32,7.9,0.12,galleta dulce chocolate pack familiar
+011,snacks,Field,Galleta Soda paquete x6,g,34,6,2.80,0.27,7.8,0.06,galleta salada soda pack aperitivo
+012,snacks,Ritz,Galleta salada paquete x6,g,32,6,3.10,0.28,7.6,0.05,galleta salada cracker pack aperitivo
+013,lacteos,Gloria,Leche evaporada lata,lata,400,1,1.65,0.24,9.0,0.00,leche evaporada reposteria desayuno
+014,lacteos,Gloria,Leche evaporada pack x6,lata,400,6,8.90,0.29,8.4,0.10,leche evaporada pack reposteria
+015,lacteos,Carnation,Leche evaporada lata,lata,354,1,1.75,0.25,8.5,0.00,leche evaporada reposteria desayuno
+016,lacteos,Carnation,Leche evaporada pack x6,lata,354,6,9.40,0.30,8.0,0.09,leche evaporada pack reposteria
+017,higiene,Dove,Jabón de tocador barra,g,90,1,1.20,0.33,8.1,0.00,jabon bano aseo personal piel
+018,higiene,Protex,Jabón antibacterial pack x3,g,110,3,3.20,0.35,7.8,0.08,jabon antibacterial bano aseo personal
+019,higiene,Rexona,Desodorante aerosol,ml,150,1,3.80,0.37,7.7,0.05,desodorante antitranspirante aseo personal
+020,higiene,Dove,Desodorante barra pack x2,g,45,2,5.90,0.36,7.4,0.10,desodorante antitranspirante pack
+021,higiene,Colgate,Pasta dental triple acción,ml,100,1,2.40,0.31,8.8,0.05,pasta dental dentifrico higiene bucal
+022,higiene,Oral-B,Pasta dental protección completa pack x2,ml,100,2,4.50,0.34,8.2,0.09,pasta dental dentifrico pack higiene bucal
+023,higiene,Pantene,Champú cuidado diario,ml,400,1,5.90,0.32,7.6,0.06,champu shampoo cabello aseo personal
+024,higiene,Head & Shoulders,Champú anticaspa pack x2,ml,375,2,10.80,0.35,7.3,0.10,champu anticaspa shampoo pack cabello
+025,bebes,Huggies,Pañales talla M paquete x30,unidad,1,30,12.90,0.30,9.1,0.06,panal bebe talla m cambio
+026,bebes,Pampers,Pañales talla M paquete x44,unidad,1,44,17.50,0.32,8.9,0.08,panal bebe talla m cambio
+027,bebes,Huggies,Toallitas húmedas paquete x80,unidad,1,80,4.25,0.29,9.0,0.05,toallita humeda bebe limpieza cambio
+028,bebes,Pampers,Toallitas húmedas pack x3,unidad,1,168,9.80,0.33,8.4,0.10,toallita humeda bebe pack limpieza
+029,bebes,Johnson's Baby,Champú para bebé,ml,400,1,5.50,0.34,7.8,0.05,champu bebe cabello aseo
+030,bebes,Mustela,Gel y champú para bebé,ml,500,1,12.90,0.38,6.8,0.08,gel champu bebe piel aseo
+031,bebes,Desitin,Crema protectora para pañal,g,57,1,6.20,0.36,7.4,0.04,crema panal bebe rozadura cuidado
+032,bebes,Bepanthen,Pomada protectora para bebé,g,30,1,7.10,0.39,7.0,0.06,pomada crema panal bebe piel
+033,limpieza,Ariel,Detergente en polvo,kg,1,1,6.80,0.31,8.6,0.05,detergente ropa lavado limpieza hogar
+034,limpieza,Tide,Detergente en polvo pack x2,kg,1,2,12.20,0.34,8.1,0.10,detergente ropa pack lavado limpieza
+035,limpieza,Clorox,Lejía desinfectante,L,1,1,2.10,0.28,9.0,0.03,lejia cloro desinfectante limpieza hogar
+036,limpieza,Cloralex,Lejía desinfectante pack x2,L,1,2,3.80,0.31,8.5,0.08,lejia cloro pack desinfectante
+037,limpieza,Mr. Músculo,Limpiador multiuso,ml,500,1,3.60,0.35,7.9,0.05,limpiador multiuso cocina bano hogar
+038,limpieza,Lysol,Limpiador desinfectante pack x2,ml,500,2,7.20,0.38,7.6,0.10,limpiador desinfectante multiuso pack
+039,limpieza,Axion,Lavavajillas líquido,ml,750,1,3.20,0.32,8.8,0.05,lavavajillas detergente platos cocina
+040,limpieza,Dawn,Lavavajillas líquido pack x2,ml,650,2,6.40,0.36,8.2,0.09,lavavajillas detergente platos pack
+041,limpieza,Fabuloso,Limpiador para pisos,L,1,1,3.90,0.34,8.0,0.05,limpiador pisos aroma limpieza hogar
+042,limpieza,Poett,Limpiador para pisos pack x2,L,0.9,2,6.90,0.35,7.7,0.09,limpiador pisos aroma pack hogar
+043,limpieza,Glad,Bolsas de basura resistentes,unidad,1,20,5.20,0.37,7.2,0.06,bolsa basura resistente limpieza hogar
+044,limpieza,Hefty,Bolsas de basura resistentes,unidad,1,40,8.90,0.39,6.9,0.10,bolsa basura resistente pack hogar
+045,reposteria,Betty Crocker,Mezcla para pastel de chocolate,caja,1,1,3.90,0.32,8.4,0.05,mezcla lista torta pastel chocolate hornear
+046,reposteria,Duncan Hines,Mezcla para pastel de vainilla pack x2,caja,1,2,7.10,0.35,7.9,0.10,mezcla lista torta pastel vainilla hornear
+047,harinas,Gold Medal,Harina de trigo todo uso,kg,1,1,2.60,0.24,8.7,0.00,harina trigo pastel torta pan
+048,harinas,Pillsbury,Harina de trigo todo uso pack x2,kg,1,2,4.80,0.28,8.2,0.08,harina trigo pack pastel torta
+049,reposteria,Fleischmann's,Levadura seca instantánea,g,11,3,1.90,0.33,7.8,0.00,levadura seca pan masa reposteria
+050,reposteria,Red Star,Levadura seca instantánea,g,7,6,2.80,0.36,7.3,0.06,levadura seca pack pan masa
+051,granos,Domino,Azúcar blanca,kg,1,1,2.10,0.23,9.0,0.00,azucar blanca pastel torta reposteria
+052,granos,C&H,Azúcar blanca pack x2,kg,1,2,3.80,0.27,8.5,0.07,azucar blanca pack pastel reposteria
+053,huevos,Eggland's Best,Huevos grandes docena,unidad,1,12,4.20,0.22,9.2,0.00,huevo docena pastel torta desayuno
+054,huevos,Vital Farms,Huevos grandes bandeja,unidad,1,18,7.80,0.28,8.1,0.05,huevo bandeja pastel torta desayuno
+055,lacteos,Land O'Lakes,Mantequilla sin sal,g,200,1,4.30,0.30,8.0,0.04,mantequilla sin sal pastel reposteria
+056,lacteos,Kerrygold,Mantequilla sin sal pack x2,g,200,2,8.90,0.35,7.1,0.08,mantequilla sin sal pack pastel
+057,reposteria,Royal,Polvo de hornear,g,100,1,1.50,0.31,8.3,0.00,polvo hornear pastel torta reposteria
+058,reposteria,Clabber Girl,Polvo de hornear pack x2,g,100,2,2.70,0.34,7.8,0.06,polvo hornear pack pastel torta
+059,reposteria,McCormick,Esencia de vainilla,ml,100,1,2.80,0.36,7.5,0.04,vainilla esencia pastel torta postre
+060,reposteria,Molina,Esencia de vainilla pack x2,ml,120,2,4.90,0.38,7.0,0.08,vainilla esencia pack pastel postre
+061,reposteria,Betty Crocker,Cobertura de chocolate lista para usar,g,453,1,4.20,0.35,7.6,0.05,cobertura frosting chocolate pastel torta
+062,reposteria,Duncan Hines,Cobertura de vainilla lista para usar pack x2,g,453,2,7.60,0.38,7.1,0.09,cobertura frosting vainilla pack pastel

@@ -1,0 +1,21 @@
+{#- Línea del carrito. `line` = CartLineVM. -#}
+{% set vals = '{"slot_id": ' ~ (line.slot_id | tojson) ~ ', "product_id": ' ~ (line.product_id | tojson) ~ '}' %}
+<li class="py-2 flex items-center gap-2">
+  <div class="min-w-0 flex-1">
+    <p class="text-sm leading-snug line-clamp-2">{{ line.name }}</p>
+    <p class="text-xs text-slate-500">
+      {{ line.unit_price.display }} c/u{% if line.quantity > 1 %} · <span class="font-medium text-slate-700">{{ line.line_total.display }}</span>{% endif %}
+      {% for badge in line.badges %}<span class="ml-1 px-1.5 rounded-full {{ badge.css }}" {% if badge.title %}title="{{ badge.title }}"{% endif %}>{{ badge.text }}</span>{% endfor %}
+    </p>
+  </div>
+
+  <div class="flex items-center border border-slate-200 rounded-lg shrink-0">
+    <button type="button" hx-post="{{ line.dec_endpoint }}" hx-vals='{{ vals }}'
+            class="w-9 h-9 text-slate-600 hover:bg-slate-100 rounded-l-lg" aria-label="Quitar uno de {{ line.name }}">−</button>
+    <span class="w-7 text-center text-sm" aria-label="Cantidad">{{ line.quantity }}</span>
+    <button type="button" hx-post="{{ line.inc_endpoint }}" hx-vals='{{ vals }}'
+            class="w-9 h-9 text-slate-600 hover:bg-slate-100 rounded-r-lg" aria-label="Agregar uno de {{ line.name }}">+</button>
+  </div>
+  <button type="button" hx-post="{{ line.remove_endpoint }}" hx-vals='{{ vals }}'
+          class="w-9 h-9 text-slate-400 hover:text-red-600 shrink-0" aria-label="Eliminar {{ line.name }}">🗑</button>
+</li>

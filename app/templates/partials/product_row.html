@@ -1,0 +1,48 @@
+{# ProductRow (doc 03 §3.1). `product` = Product, `quantity` = int. #}
+{% set badge = product_signal_badge(product.signals) %}
+<div class="flex flex-col md:flex-row gap-3">
+  <div class="w-full h-24 md:w-20 md:h-20 shrink-0 rounded-lg flex items-center justify-center text-2xl font-semibold {{ category_placeholder_class[product.category.value] }}">
+    {% if product.image_url %}
+      <img src="{{ product.image_url }}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" class="w-full h-full object-cover rounded-lg" alt="{{ product.name }}" />
+      <span style="display:none;">{{ product.name[0] | upper }}</span>
+    {% else %}
+      {{ product.name[0] | upper }}
+    {% endif %}
+  </div>
+
+  <div class="flex-1">
+    <div class="flex flex-wrap items-baseline justify-between gap-x-3">
+      <p class="font-medium">{{ product.name }} <span class="text-slate-400 font-normal">×{{ quantity }}</span></p>
+      <p class="text-right whitespace-nowrap">
+        {% if product.price.has_promo %}
+          <span class="line-through text-slate-400 text-sm">S/ {{ '%.2f'|format(product.price.amount) }}</span>
+          <span class="font-semibold text-emerald-700">S/ {{ '%.2f'|format(product.price.effective_amount) }}</span>
+        {% else %}
+          <span class="font-semibold">S/ {{ '%.2f'|format(product.price.effective_amount) }}</span>
+        {% endif %}
+        <span class="text-slate-400 text-sm"> c/u</span>
+      </p>
+    </div>
+
+    <div class="mt-1 flex flex-wrap items-center gap-2 text-xs">
+      {% set avail = product.availability %}
+      {% if avail.value == 'in_stock' %}
+        <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">✓ {{ availability_labels[avail] }}</span>
+      {% elif avail.value == 'low_stock' %}
+        <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">{{ availability_labels[avail] }}</span>
+      {% elif avail.value == 'out_of_stock' %}
+        <span class="px-2 py-0.5 rounded-full bg-red-100 text-red-800">{{ availability_labels[avail] }}</span>
+      {% else %}
+        <span class="px-2 py-0.5 rounded-full bg-slate-200 text-slate-600">{{ availability_labels[avail] }}</span>
+      {% endif %}
+
+      {% if product.brand %}<span class="text-slate-400">{{ product.brand }}</span>{% endif %}
+
+      {% if badge == 'simulated' %}
+        <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800" title="Dato sintético: no viene del dataset, se generó para que la feature no muera.">⚠ señal simulada</span>
+      {% elif badge == 'derived' %}
+        <span class="px-2 py-0.5 rounded-full bg-slate-200 text-slate-600" title="Calculada a partir de otros campos reales.">estimado</span>
+      {% endif %}
+    </div>
+  </div>
+</div>

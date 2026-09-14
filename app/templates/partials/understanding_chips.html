@@ -1,0 +1,16 @@
+{#- "Entendí tu necesidad". `vm.chips` = tuple[ChipVM]. -#}
+{% if vm.chips %}
+<section class="bg-emerald-50 border border-emerald-100 rounded-2xl p-4">
+  <p class="font-semibold text-emerald-900 flex items-center gap-2">
+    <span class="w-6 h-6 rounded-full bg-emerald-600 text-white text-sm flex items-center justify-center" aria-hidden="true">✓</span>
+    Entendí tu necesidad:
+  </p>
+  <ul class="mt-3 flex flex-wrap gap-2">
+    {% for chip in vm.chips %}
+      <li class="bg-white border border-emerald-100 rounded-full px-3 py-1.5 text-sm shadow-sm">
+        {% if chip.icon %}<span aria-hidden="true">{{ chip.icon }}</span>{% endif %} {{ chip.text }}
+      </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}

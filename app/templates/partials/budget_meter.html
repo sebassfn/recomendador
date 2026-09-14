@@ -1,0 +1,17 @@
+{#- Presupuesto. `vm.cart.budget` = BudgetVM. Sin presupuesto declarado no hay
+    barra ni "te quedan 0": ausente no es cero. -#}
+{% set b = vm.cart.budget %}
+{% if b.has_budget %}
+  <div class="rounded-xl p-3 border {{ 'bg-red-50 border-red-200' if b.is_over else 'bg-emerald-50 border-emerald-100' }}">
+    <p class="font-semibold {{ 'text-red-800' if b.is_over else 'text-emerald-900' }}">
+      {{ '⚠ Fuera del presupuesto' if b.is_over else '✓ Dentro del presupuesto' }}
+    </p>
+    <p class="text-sm {{ 'text-red-700' if b.is_over else 'text-slate-600' }}">{{ b.message }}</p>
+    <div class="mt-2 h-2 bg-white rounded-full overflow-hidden" role="progressbar"
+         aria-valuenow="{{ b.percent }}" aria-valuemin="0" aria-valuemax="100">
+      <div class="h-full {{ b.bar_css }}" style="width: {{ b.percent }}%"></div>
+    </div>
+  </div>
+{% else %}
+  <p class="text-sm text-slate-500 bg-slate-50 rounded-xl p-3">{{ b.message }}</p>
+{% endif %}

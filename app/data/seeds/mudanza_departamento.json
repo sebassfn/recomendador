@@ -1,0 +1,52 @@
+{
+  "raw_input": "Me mudo a un departamento chico y tengo 300 soles para organizarlo",
+  "mission_kind": "home_setup",
+  "title": "Organización de departamento chico",
+  "slots": [
+    {
+      "slot_id": "slot-almacenaje",
+      "label": "Almacenaje para espacios chicos",
+      "rationale": "Un departamento chico necesita maximizar espacio: la prioridad es almacenaje compacto y apilable.",
+      "target_category": "home",
+      "keywords": ["organizador", "caja organizadora", "repisa", "estante modular", "contenedor apilable", "organizador multiuso"],
+      "required_attributes": {},
+      "quantity": 2,
+      "priority": 1,
+      "is_optional": false
+    },
+    {
+      "slot_id": "slot-limpieza-inicial",
+      "label": "Limpieza inicial",
+      "rationale": "Toda mudanza empieza con dejar el espacio nuevo limpio antes de instalarse.",
+      "target_category": "grocery",
+      "keywords": ["limpiador multiuso", "desinfectante", "trapeador", "escoba", "bolsas de basura"],
+      "required_attributes": {},
+      "quantity": 1,
+      "priority": 2,
+      "is_optional": false
+    },
+    {
+      "slot_id": "slot-textil-hogar",
+      "label": "Textil de hogar básico",
+      "rationale": "Instalarse implica lo mínimo de textil: sábanas o cortinas para el nuevo espacio.",
+      "target_category": "home",
+      "keywords": ["sabanas", "cortinas", "toallas", "textil hogar", "cubrecama"],
+      "required_attributes": {},
+      "quantity": 1,
+      "priority": 3,
+      "is_optional": true
+    }
+  ],
+  "constraints": {
+    "budget_total": 300,
+    "currency": "USD",
+    "store_id": null,
+    "group_size": null,
+    "has_children": null,
+    "target_date": null,
+    "vehicle": null,
+    "excluded_categories": []
+  },
+  "entities": {"housing": "departamento chico", "budget": 300},
+  "interpreted_by": "cached_seed"
+}

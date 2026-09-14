@@ -55,7 +55,7 @@ degradación: **toda feature tiene una fila aquí**.
 
 | Campo canónico | Tipo | Oblig. | Si falta | Feature afectada |
 |---|---|---|---|---|
-| `brand` | `str?` | Degradable | Se oculta la línea de marca en la tarjeta. No afecta ranking. | Tarjeta, comparador |
+| `brand` | `str?` | Degradable | Se oculta la línea de marca en la tarjeta. Si el slot pide una marca (`BasketSlot.preferred_brands`), un producto sin `brand` **no coincide** y queda después de los de esa marca, pero no se descarta (ver doc 02 §3.2). | Tarjeta, orden por marca pedida, comparador |
 | `subcategory` | `str?` | Degradable | Se usa `category` en su lugar en los agrupadores. | Agrupación de canasta |
 | `raw_category` | `str?` | Degradable | Se pierde la auditoría del mapeo; `AdapterReport` marca el mapeo como no verificable. | Pantalla de diagnóstico |
 | `description` | `str?` | Degradable | Relevancia se calcula sólo sobre `name` + `attributes` (pierde recall, no rompe). | Ranking, detalle |
@@ -74,6 +74,22 @@ capacidad en litros, material, sabor, aroma. **Se copia tal cual, sin esquema.**
 | Hay atributos pobres (< 3 claves promedio) | Comparador degrada a comparar precio, marca y señales de negocio. |
 | No hay atributos | Fitment degrada a coincidencia textual sobre `name` (ver doc 06). El comparador sigue vivo con precio/marca/señales. |
 
+Algunas claves tienen definición en `app/data/attribute_definitions.json` y por eso el
+agente puede pedirlas como especificación dura (`BasketSlot.attribute_requirements`).
+Las de presentación de producto empaquetado son:
+
+| Clave | Tipo | Ejemplo en el catálogo | Qué pide el cliente |
+|---|---|---|---|
+| `units_per_pack` | número | `6` | "paquete de 6", "pack x6" (cuántas unidades trae UN paquete) |
+| `volume_ml` | número, `ml`/`l` | `500` | "de 500 ml", "de 1.5 L" (tamaño de cada unidad) |
+| `flavor` | texto | `"cola"` | "sabor cola" |
+| `sugar_free` | texto | `"sí"` | "sin azúcar" |
+| `container_type` | texto | `"botella"` | "en lata", "en botella" |
+
+Un producto que no declara la clave pedida queda fuera con `MISSING_REQUIRED_ATTRIBUTE`
+y la respuesta dice que falta ese dato: nunca se asume que "paquete de 12" se cumple.
+"N paquetes" no es un atributo: es `BasketSlot.quantity`.
+
 ### 3.3 Stock y tienda
 
 | Campo canónico | Tipo | Oblig. | Si falta | Feature afectada |
@@ -91,7 +107,7 @@ capacidad en litros, material, sabor, aroma. **Se copia tal cual, sin esquema.**
 
 | Campo canónico | Tipo | Oblig. | Si falta | Feature afectada |
 |---|---|---|---|---|
-| `price.currency` | enum | Default `PEN` | Se asume moneda única del dataset; se declara en el diagnóstico. | Todo lo monetario |
+| `price.currency` | enum | Default `USD` | Se asume moneda única del dataset; se declara en el diagnóstico. | Todo lo monetario |
 | `price.promo_amount` | `Decimal?` | Degradable | La señal `promo` sale del scoring y su peso se redistribuye. No se muestra el tachado. | Ranking, tarjeta |
 | `price.promo_starts_on` / `promo_ends_on` | `date?` | Degradable | La promo se asume vigente. Se omite el contador "válido hasta". | Tarjeta |
 

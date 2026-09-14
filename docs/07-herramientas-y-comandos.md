@@ -149,8 +149,9 @@ curl -Lo app/static/tailwind.js  https://cdn.tailwindcss.com/3.4.16
 # ETL: insumos -> catalog.db  (local, con el grupo etl)
 uv run --group etl python -m app.etl ./insumos --out catalog.db
 
-# Correr local
-uv run uvicorn app.main:app --reload --port 8080
+# Correr local (--env-file carga .env: sin esto ANTHROPIC_API_KEY,
+# LANGSMITH_TRACING, etc. no llegan al proceso — `uv run` no lo hace solo)
+uv run uvicorn app.main:app --env-file .env --reload --port 8080
 
 # Tests del motor
 uv run --group dev pytest -q

@@ -1,0 +1,63 @@
+{
+  "raw_input": "Me voy con los niños a la playa este feriado largo, somos 4 y vamos en carro",
+  "mission_kind": "trip",
+  "title": "Viaje a la playa con niños",
+  "slots": [
+    {
+      "slot_id": "slot-proteccion-solar",
+      "label": "Protección solar",
+      "rationale": "Vas con niños a la playa: la exposición al sol es el riesgo más directo de la misión.",
+      "target_category": "grocery",
+      "keywords": ["bloqueador", "protector solar", "filtro solar", "spf", "factor de proteccion", "bronceador para niños"],
+      "required_attributes": {},
+      "quantity": 2,
+      "priority": 1,
+      "is_optional": false
+    },
+    {
+      "slot_id": "slot-hidratacion",
+      "label": "Hidratación para el grupo",
+      "rationale": "Son 4 personas, un feriado largo en la playa: hidratación es la necesidad diaria más obvia.",
+      "target_category": "grocery",
+      "keywords": ["agua embotellada", "agua mineral", "bebida hidratante", "bidon de agua", "sueros orales"],
+      "required_attributes": {},
+      "quantity": 4,
+      "priority": 2,
+      "is_optional": false
+    },
+    {
+      "slot_id": "slot-organizador-viaje",
+      "label": "Dónde llevar todo",
+      "rationale": "Viajan en carro con niños: necesitan algo para organizar y transportar el equipaje y los víveres.",
+      "target_category": "home",
+      "keywords": ["cooler", "hielera", "organizador de maletera", "bolsa termica", "contenedor plastico", "maleta"],
+      "required_attributes": {},
+      "quantity": 1,
+      "priority": 3,
+      "is_optional": false
+    },
+    {
+      "slot_id": "slot-revision-vehiculo",
+      "label": "Revisión del carro antes de viajar",
+      "rationale": "Van en carro: un viaje largo por carretera exige una revisión preventiva antes de salir.",
+      "target_category": "auto",
+      "keywords": ["revision vehicular", "chequeo pre viaje", "presion de llantas", "kit de emergencia", "liquido de frenos"],
+      "required_attributes": {},
+      "quantity": 1,
+      "priority": 2,
+      "is_optional": false
+    }
+  ],
+  "constraints": {
+    "budget_total": null,
+    "currency": "USD",
+    "store_id": null,
+    "group_size": 4,
+    "has_children": true,
+    "target_date": null,
+    "vehicle": null,
+    "excluded_categories": []
+  },
+  "entities": {"transport": "carro", "destination": "playa", "occasion": "feriado largo"},
+  "interpreted_by": "cached_seed"
+}

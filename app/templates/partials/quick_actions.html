@@ -1,0 +1,29 @@
+{#- Botones de acción reutilizables. Recibe `actions` = tuple[QuickActionVM] y,
+    opcional, `grid` para el layout en 2 columnas del carrito.
+
+    Las acciones cuyo endpoint termina en /turn mandan el label como texto del
+    turno y el action_id para el fallback determinista; las demás sólo postean.
+    Una acción deshabilitada se muestra con su motivo, no se oculta. -#}
+<div class="{{ 'grid grid-cols-2 gap-2' if grid else 'flex flex-wrap gap-2' }}">
+  {% for a in actions %}
+    <button type="button"
+            {% if a.enabled %}
+              hx-post="{{ a.endpoint }}"
+              {% if a.endpoint.endswith('/turn') %}hx-vals='{"text": {{ a.label | tojson }}, "action": {{ a.action_id | tojson }}}'{% endif %}
+            {% else %}
+              disabled
+            {% endif %}
+            title="{{ a.disabled_reason if not a.enabled else (a.hint or '') }}"
+            class="min-h-[44px] px-3 py-2 rounded-{{ 'xl' if grid else 'full' }} border text-sm font-medium flex items-center justify-center gap-1.5
+                   {{ 'bg-blue-50 border-blue-200 text-blue-800 hover:bg-blue-100' if a.enabled and grid else '' }}
+                   {{ 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50' if a.enabled and not grid else '' }}
+                   {{ 'bg-slate-50 border-slate-200 text-slate-400 cursor-not-allowed' if not a.enabled else '' }}">
+      {% if a.icon %}<span aria-hidden="true">{{ a.icon }}</span>{% endif %}{{ a.label }}
+    </button>
+  {% endfor %}
+</div>
+{% if grid %}
+  {% for a in actions if not a.enabled and a.disabled_reason %}
+    <p class="text-xs text-slate-400">{{ a.label }}: {{ a.disabled_reason }}</p>
+  {% endfor %}
+{% endif %}

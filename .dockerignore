@@ -1,0 +1,32 @@
+# Insumos crudos del ETL local: nunca entran a la imagen (doc 07 §1, CLAUDE.md).
+# app/data/seeds/ NO va acá: es la caché en disco de las 3 misiones semilla
+# (doc 04 §6) que el runtime lee en app/llm/interpreter.py.
+./insumos
+
+# Tests, dev y scripts de ETL/seed local: sólo el grupo por defecto y
+# catalog.db van en la imagen.
+tests
+scripts
+.pytest_cache
+
+# Entorno local, no el de la imagen.
+.venv
+.env
+.python-version
+
+# Control de versiones y editor.
+.git
+.gitignore
+.claude
+docs
+README.md
+
+# Basura de Python.
+__pycache__
+*.pyc
+*.pyo
+
+# La propia imagen no debe reconstruirse a partir de sí misma.
+Dockerfile
+.dockerignore
+deploy.sh

@@ -1,0 +1,57 @@
+{#- Tarjeta de recomendación. `card` = ProductCardVM. -#}
+<article class="bg-white rounded-xl border {{ 'border-emerald-300 ring-1 ring-emerald-200' if card.in_cart else 'border-slate-200' }} p-3 flex flex-col gap-2 shadow-sm" id="card-{{ card.key | replace(':', '-') }}">
+  <div class="flex gap-3">
+    {# Sin imágenes externas: placeholder CSS por categoría. #}
+    <div class="shrink-0 w-16 h-16 rounded-lg flex items-center justify-center text-2xl font-semibold {{ card.image.css }}">
+      {% if card.image.url %}
+        <img src="{{ card.image.url }}" alt="{{ card.name }}" class="w-full h-full object-cover rounded-lg"
+             onerror='this.replaceWith({{ card.image.initial | tojson }})' />
+      {% else %}
+        {{ card.image.initial }}
+      {% endif %}
+    </div>
+
+    <div class="min-w-0 flex-1">
+      <h4 class="font-medium text-sm leading-snug line-clamp-2">{{ card.name }}</h4>
+      <p class="mt-0.5">
+        <span class="text-lg font-semibold text-blue-700">{{ card.price.display }}</span>
+        {% if card.price_before %}<span class="text-xs text-slate-400 line-through ml-1">{{ card.price_before.display }}</span>{% endif %}
+      </p>
+      {% if card.brand %}<p class="text-xs text-slate-400">{{ card.brand }}</p>{% endif %}
+    </div>
+  </div>
+
+  {# Razón: habla de la misión ("por qué lo necesitas"), no del producto. #}
+  <p class="text-xs text-slate-600 line-clamp-2" title="{{ card.reason.text }}">{{ card.reason.text }}</p>
+
+  {# Cita literal recortada, o el estado explícito "sin respaldo documental". #}
+  {% if card.reason.citation.has_support %}
+    <p class="text-xs text-slate-500 border-l-2 border-slate-300 pl-2 line-clamp-2"
+       title="{{ card.reason.citation.doc_title }}{% if card.reason.citation.locator %}, {{ card.reason.citation.locator }}{% endif %}">
+      📄 “{{ card.reason.citation.snippet }}” — {{ card.reason.citation.doc_title }}
+    </p>
+  {% else %}
+    <p class="text-xs text-slate-400 italic">sin respaldo documental</p>
+  {% endif %}
+
+  <div class="flex flex-wrap gap-1 text-[11px]">
+    <span class="px-2 py-0.5 rounded-full font-semibold {{ card.role_css }}">{{ card.role_label }}</span>
+    {% if card.requested_brand %}<span class="px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-800">🏷️ Marca que pediste</span>{% endif %}
+    <span class="px-2 py-0.5 rounded-full {{ card.availability_css }}">{{ card.availability_label }}</span>
+    {% for badge in card.badges %}
+      <span class="px-2 py-0.5 rounded-full {{ badge.css }}" {% if badge.title %}title="{{ badge.title }}"{% endif %}>
+        {% if badge.kind == "simulated" %}⚠ {% endif %}{{ badge.text }}
+      </span>
+    {% endfor %}
+  </div>
+
+  {# El rol va en la fila de píldoras y el botón a ancho completo: en cards
+     angostas (3 por fila) compartir una línea partía ambos textos. #}
+  <button type="button"
+          hx-post="{{ card.add_endpoint }}"
+          hx-vals='{"slot_id": {{ card.slot_id | tojson }}, "product_id": {{ card.product_id | tojson }}}'
+          class="mt-auto w-full min-h-[44px] px-3 rounded-lg text-sm font-medium flex items-center justify-center gap-1.5 whitespace-nowrap
+                 {{ 'bg-emerald-50 text-emerald-800 border border-emerald-300 hover:bg-emerald-100' if card.in_cart else 'bg-blue-600 text-white hover:bg-blue-700' }}">
+    {% if card.in_cart %}✓ En carrito ({{ card.cart_quantity }}) · +1{% else %}🛒 Agregar{% endif %}
+  </button>
+</article>

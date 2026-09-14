@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}Recomendador de misión de compra{% endblock %}</title>
+  <script src="/static/tailwind.js"></script>
+  <script src="/static/htmx.min.js"></script>
+  <style>
+    /* Indicador de HTMX: oculto salvo mientras hay un request en curso. */
+    .htmx-indicator { display: none; }
+    .htmx-request .htmx-indicator, .htmx-request.htmx-indicator { display: flex; }
+    .htmx-request button { cursor: progress; }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-900 min-h-screen {% block body_class %}pb-24 md:pb-8{% endblock %}">
+  <div class="{% block container_class %}max-w-4xl{% endblock %} mx-auto px-4 py-6">
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>

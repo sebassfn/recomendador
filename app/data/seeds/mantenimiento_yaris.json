@@ -1,0 +1,63 @@
+{
+  "raw_input": "Necesito hacerle mantenimiento al carro antes de viajar, es un Toyota Yaris 2018",
+  "mission_kind": "vehicle_maintenance",
+  "title": "Mantenimiento preventivo — Toyota Yaris 2018",
+  "slots": [
+    {
+      "slot_id": "slot-llantas",
+      "label": "Llantas",
+      "rationale": "Mantenimiento antes de un viaje: el estado y la medida correcta de las llantas es lo primero que se revisa.",
+      "target_category": "auto",
+      "keywords": ["llanta", "llantas", "neumatico", "neumaticos", "medida de llanta", "185/65r15"],
+      "required_attributes": {"tire_size": "185/65R15"},
+      "quantity": 4,
+      "priority": 1,
+      "is_optional": false
+    },
+    {
+      "slot_id": "slot-aceite-filtros",
+      "label": "Aceite y filtros",
+      "rationale": "Cambio de aceite y filtros es el mantenimiento preventivo estándar antes de un viaje largo.",
+      "target_category": "auto",
+      "keywords": ["aceite de motor", "lubricante", "filtro de aceite", "filtro de aire", "cambio de aceite"],
+      "required_attributes": {},
+      "quantity": 1,
+      "priority": 2,
+      "is_optional": false
+    },
+    {
+      "slot_id": "slot-limpiaparabrisas",
+      "label": "Líquido limpiaparabrisas",
+      "rationale": "Insumo de bajo costo que suele revisarse junto con el resto del mantenimiento antes de viajar.",
+      "target_category": "grocery",
+      "keywords": ["liquido limpiaparabrisas", "limpia parabrisas", "aditivo limpiador de vidrios"],
+      "required_attributes": {},
+      "quantity": 1,
+      "priority": 4,
+      "is_optional": true
+    },
+    {
+      "slot_id": "slot-organizador-maletera",
+      "label": "Organizador de maletera",
+      "rationale": "Con el carro en el taller para un viaje, ordenar la maletera es una necesidad adyacente de hogar.",
+      "target_category": "home",
+      "keywords": ["organizador de maletera", "caja organizadora para auto", "contenedor de maletera"],
+      "required_attributes": {},
+      "quantity": 1,
+      "priority": 5,
+      "is_optional": true
+    }
+  ],
+  "constraints": {
+    "budget_total": null,
+    "currency": "USD",
+    "store_id": null,
+    "group_size": null,
+    "has_children": null,
+    "target_date": null,
+    "vehicle": {"brand": "Toyota", "model": "Yaris", "year": "2018"},
+    "excluded_categories": []
+  },
+  "entities": {"vehicle_brand": "Toyota", "vehicle_model": "Yaris", "vehicle_year": "2018"},
+  "interpreted_by": "cached_seed"
+}

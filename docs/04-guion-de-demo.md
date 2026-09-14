@@ -214,6 +214,17 @@
 > 'llanta 185/65R15' y el mismo motor le devuelve ese slot resuelto con sus
 > alternativas. La misión con un solo slot es un buscador.
 >
+> Si además nombra una marca —'galletas Oreo paquete de 12'— la marca pasa al plan
+> tal cual la escribió y esa marca va primero; el 'paquete de 12' es una
+> especificación dura y deja fuera los paquetes de 6. Si no tengo la marca, se lo
+> digo y le muestro otras. Y la palanca comercial sigue viva donde corresponde:
+> decide **cuál** Coca-Cola, nunca le cambia Coca-Cola por Pepsi."
+>
+> *Para mostrarlo en vivo:* "quiero comprar coca-cola" (chip de marca, Coca-Cola
+> primero), "galletas oreo paquete de 12" (sólo el pack x12), "quiero una gaseosa big
+> cola" (aviso de marca no encontrada).
+>
+> "
 > El valor diferencial aparece en la intención difusa, que es donde el buscador
 > tradicional devuelve cero resultados y el cliente se va."
 

@@ -21,7 +21,7 @@ from __future__ import annotations
 from datetime import date, datetime
 from decimal import Decimal
 from enum import Enum
-from typing import Any, Generic, TypeVar
+from typing import Any, Generic, Literal, TypeVar
 
 from pydantic import BaseModel, ConfigDict, Field, computed_field, model_validator
 
@@ -103,8 +103,10 @@ class ExclusionReason(str, Enum):
     INCOMPATIBLE = "incompatible"
     WRONG_CATEGORY = "wrong_category"
     MISSING_REQUIRED_ATTRIBUTE = "missing_required_attribute"
+    WRONG_REQUIRED_ATTRIBUTE_VALUE = "wrong_required_attribute_value"
     DISCONTINUED = "discontinued"
     NO_PRICE = "no_price"
+    NO_TEXT_MATCH = "no_text_match"
 
 
 class CompatibilityOperator(str, Enum):
@@ -117,6 +119,7 @@ class CompatibilityOperator(str, Enum):
 
 
 class Currency(str, Enum):
+    DOLLAR = "$"
     PEN = "PEN"
     USD = "USD"
     COP = "COP"
@@ -172,7 +175,7 @@ class Price(BaseModel):
     model_config = ConfigDict(frozen=True)
 
     amount: Decimal = Field(ge=0)
-    currency: Currency = Currency.PEN
+    currency: Currency = Currency.USD
     promo_amount: Decimal | None = Field(default=None, ge=0)
     promo_starts_on: date | None = None
     promo_ends_on: date | None = None
@@ -380,6 +383,7 @@ class Product(BaseModel):
         ),
     )
 
+    attribute_sources: dict[str, SignalSource] = Field(default_factory=dict)
     stock: list[StoreStock] = Field(default_factory=list)
     signals: BusinessSignals = Field(default_factory=BusinessSignals)
     documents: list[Citation] = Field(
@@ -420,7 +424,7 @@ class MissionConstraints(BaseModel):
     model_config = ConfigDict(frozen=True)
 
     budget_total: Decimal | None = Field(default=None, ge=0)
-    currency: Currency = Currency.PEN
+    currency: Currency = Currency.USD
     store_id: str | None = None
     group_size: int | None = Field(default=None, ge=1)
     has_children: bool | None = None
@@ -431,12 +435,34 @@ class MissionConstraints(BaseModel):
     excluded_categories: list[Category] = Field(default_factory=list)
 
 
+class AttributeRequirement(BaseModel):
+    """Especificación explícita, independiente del tipo de producto.
+
+    contains verifica un valor contra el intervalo admitido del producto;
+    between verifica un atributo escalar contra el intervalo pedido.
+    """
+
+    attribute: str
+    operator: Literal["eq", "gte", "lte", "between", "contains"] = "eq"
+    value: str
+    upper_value: str | None = None
+    unit: str | None = None
+    source_text: str = Field(default="", description="Fragmento literal del usuario que declara el valor; nunca una inferencia.")
+
+    @model_validator(mode="after")
+    def _between_requires_upper(self) -> AttributeRequirement:
+        if self.operator == "between" and self.upper_value is None:
+            raise ValueError("between requiere upper_value")
+        return self
+
+
 class BasketSlot(BaseModel):
     """Un rol funcional dentro de la canasta, no un producto.
 
     Esta es la pieza conceptual del producto: el LLM no elige SKUs, declara
     necesidades ("hidratación para 4 personas", "protección solar", "revisión de
-    neumáticos"). El motor resuelve cada slot contra la base de datos.
+    neumáticos") y copia lo que el cliente declaró (especificaciones, marcas
+    nombradas). El motor resuelve cada slot contra la base de datos.
     """
 
     model_config = ConfigDict(frozen=True)
@@ -447,6 +473,11 @@ class BasketSlot(BaseModel):
     target_category: Category = Category.UNKNOWN
     keywords: list[str] = Field(default_factory=list)
     required_attributes: dict[str, str] = Field(default_factory=dict)
+    attribute_requirements: list[AttributeRequirement] = Field(default_factory=list)
+    preferred_brands: list[str] = Field(
+        default_factory=list,
+        description="Marcas que el cliente nombró literalmente. Preferencia blanda: ordena primero, nunca filtra.",
+    )
     quantity: int = Field(default=1, ge=1)
     priority: int = Field(default=3, ge=1, le=5, description="1 = imprescindible, 5 = accesorio.")
     is_optional: bool = False
@@ -476,6 +507,21 @@ class MissionPlan(BaseModel):
     def spanned_categories(self) -> list[Category]:
         """Categorías que la misión atraviesa. Si son >= 2 hay valor cross-categoría."""
         return sorted({s.target_category for s in self.slots} - {Category.UNKNOWN})
+
+
+class MissionPlanDraft(BaseModel):
+    """Lo que el subagente `planner` de `app/agent/` produce -- un subconjunto
+    de `MissionPlan`. `raw_input` e `interpreted_by` los completa
+    `app/mission_agent/bridge.py`, no el LLM: son metadatos de CÓMO se llegó
+    al plan, no contenido que el modelo deba inferir. Ver
+    `app/mission_agent/domain.py::RetailMissionDomain.output_model`.
+    """
+
+    mission_kind: MissionKind = MissionKind.GENERIC
+    title: str | None = None
+    slots: list[BasketSlot] = Field(default_factory=list)
+    constraints: MissionConstraints = Field(default_factory=MissionConstraints)
+    entities: dict[str, Any] = Field(default_factory=dict)
 
 
 # ---------------------------------------------------------------------------
@@ -529,6 +575,9 @@ class ScoredProduct(BaseModel):
     exclusion_detail: str | None = None
     compatibility_checked: bool = False
     compatibility_passed: bool | None = None
+    matches_preferred_brand: bool | None = Field(
+        default=None, description="None si el slot no pidió marca; si la pidió, si este producto es de esa marca."
+    )
 
     @computed_field  # type: ignore[prop-decorator]
     @property
@@ -554,11 +603,24 @@ class ResolvedSlot(BaseModel):
     rejected: list[ScoredProduct] = Field(
         default_factory=list, description="Descartados con su motivo. Alimenta el 'por qué no'."
     )
+    most_common_rejection_reason: ExclusionReason | None = Field(
+        default=None,
+        description="Motivo de descarte más frecuente sobre TODOS los candidatos, no sólo `rejected` (que viene truncado).",
+    )
 
     @computed_field  # type: ignore[prop-decorator]
     @property
     def is_unfulfilled(self) -> bool:
         return self.picked is None
+
+    @computed_field  # type: ignore[prop-decorator]
+    @property
+    def preferred_brand_found(self) -> bool | None:
+        """None si el slot no pidió marca. El motor ordena la marca pedida
+        primero, así que basta con mirar el `picked`."""
+        if not self.slot.preferred_brands:
+            return None
+        return self.picked is not None and self.picked.matches_preferred_brand is True
 
 
 class Basket(BaseModel):
@@ -569,7 +631,7 @@ class Basket(BaseModel):
     mission: MissionPlan
     slots: list[ResolvedSlot] = Field(default_factory=list)
     weights: ScoringWeights = Field(default_factory=ScoringWeights)
-    currency: Currency = Currency.PEN
+    currency: Currency = Currency.USD
     baseline_ticket: Decimal | None = Field(
         default=None,
         description="Ticket de una canasta monocategoría equivalente. Base del uplift.",

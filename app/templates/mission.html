@@ -1,0 +1,25 @@
+{#- P2: el asesor. Recibe `vm` = AdvisorVM (app/presentation/viewmodel.py) y
+    NADA más. Todo lo que hay debajo de #advisor se re-renderiza entero en cada
+    mutación de HTMX: `hx-target` y `hx-indicator` se heredan a todo botón
+    dentro del contenedor, así que los partials sólo declaran `hx-post`. -#}
+{% extends "base.html" %}
+{% block title %}{{ vm.title }} — Recomendador{% endblock %}
+{% block container_class %}max-w-6xl{% endblock %}
+{% block body_class %}pb-28 md:pb-8{% endblock %}
+{% block content %}
+<header class="flex items-center justify-between gap-3 mb-4">
+  <a href="/" class="text-sm text-slate-500 hover:text-slate-800 min-h-[44px] flex items-center">← Nueva misión</a>
+  <div id="advisor-spinner" class="htmx-indicator items-center gap-2 text-sm text-slate-500" role="status">
+    <span class="inline-block w-4 h-4 border-2 border-slate-300 border-t-blue-600 rounded-full animate-spin"></span>
+    Actualizando…
+  </div>
+</header>
+
+<div id="advisor"
+     hx-target="#advisor"
+     hx-swap="innerHTML"
+     hx-indicator="#advisor-spinner"
+     aria-live="polite">
+  {% include "partials/advisor_body.html" %}
+</div>
+{% endblock %}

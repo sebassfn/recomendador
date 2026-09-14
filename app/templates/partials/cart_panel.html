@@ -1,0 +1,45 @@
+{#- Carrito inteligente. `vm.cart` = CartVM; `vm.wow_actions` = tuple[QuickActionVM]. -#}
+<section class="bg-white rounded-2xl border border-slate-200 p-4 space-y-4 shadow-sm">
+  <header class="flex items-center gap-3">
+    <div class="relative text-3xl" aria-hidden="true">🛒
+      {% if vm.cart.items_count %}
+        <span class="absolute -top-1 -right-2 bg-emerald-600 text-white text-xs rounded-full min-w-5 h-5 px-1 flex items-center justify-center">{{ vm.cart.items_count }}</span>
+      {% endif %}
+    </div>
+    <div>
+      <h2 class="text-lg font-semibold leading-tight">Carrito inteligente</h2>
+      <p class="text-xs text-slate-500">Productos seleccionados para tu misión</p>
+    </div>
+  </header>
+
+  {% if vm.cart.is_empty %}
+    <p class="text-sm text-slate-500 border-2 border-dashed border-slate-200 rounded-lg p-4 text-center">
+      Tu carrito está vacío. Agrega productos desde las recomendaciones.
+    </p>
+  {% else %}
+    {% for group in vm.cart.groups %}
+      <div>
+        <div class="flex items-center justify-between bg-slate-50 rounded-lg px-3 py-1.5">
+          <p class="font-medium text-sm"><span aria-hidden="true">{{ group.icon }}</span> {{ group.title }}</p>
+          <p class="font-semibold text-sm">{{ group.subtotal.display }}</p>
+        </div>
+        <ul class="divide-y divide-slate-100">
+          {% for line in group.lines %}
+            {% include "partials/cart_line.html" %}
+          {% endfor %}
+        </ul>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <div class="border-t border-slate-200 pt-3 flex items-baseline justify-between">
+    <p class="text-slate-600">Subtotal</p>
+    <p class="text-2xl font-bold">{{ vm.cart.subtotal.display }}</p>
+  </div>
+
+  {% include "partials/budget_meter.html" %}
+
+  {% with actions = vm.wow_actions, grid = True %}
+    {% include "partials/quick_actions.html" %}
+  {% endwith %}
+</section>

@@ -76,11 +76,11 @@ Una pantalla, un campo, cero fricción. El jurado escribe y pasan cosas.
 ```
 ┌────────────────────────────────────────────────────────────────┐
 │ ← Viaje a la playa con niños       [ Modo Negocio ⚪──── ]      │ MissionHeader
-│ 3 categorías · 9 ítems · S/ 264.50                             │
+│ 3 categorías · 9 ítems · $ 264.50                             │
 ├────────────────────────────────────────────────────────────────┤
 │ 🛒 SUPERMERCADO                                                │ CategoryGroup
 │  ┌──────────────────────────────────────────────────────────┐  │
-│  │ Protección solar              ×2          S/ 29.90 c/u   │  │ SlotCard
+│  │ Protección solar              ×2          $ 29.90 c/u   │  │ SlotCard
 │  │ ┌────┐  Bloqueador Marca Propia SPF50                    │  │
 │  │ │img │  ✓ En stock  · marca propia · en promoción        │  │
 │  │ └────┘  score 0.745                                      │  │
@@ -92,7 +92,7 @@ Una pantalla, un campo, cero fricción. El jurado escribe y pasan cosas.
 ├────────────────────────────────────────────────────────────────┤
 │ 🚗 AUTOS        · 🏠 HOGAR Y ALMACENAJE                         │
 ├────────────────────────────────────────────────────────────────┤
-│ ▸ Total S/ 264.50 · 9 ítems · 3 categorías · +47 % ticket      │ BasketSummary
+│ ▸ Total $ 264.50 · 9 ítems · 3 categorías · +47 % ticket      │ BasketSummary
 └────────────────────────────────────────────────────────────────┘
 ```
 
@@ -101,9 +101,11 @@ Una pantalla, un campo, cero fricción. El jurado escribe y pasan cosas.
 | Componente | Marca | Estados que DEBEN existir |
 |---|---|---|
 | `MissionHeader` | [N] | normal · **misión no reconocida**: "Interpreté esto como una compra general" + botón reinterpretar |
+| `UnderstandingChips` | [N] | un chip por dato declarado · **marca pedida**: chip "🏷️ Marca: Coca-Cola" por cada marca de `preferred_brands`, justo después de las exclusiones · sin datos: chip con el tipo de misión |
 | `CategoryGroup` | [N] | normal · **una sola categoría**: se muestra igual, con nota "esta misión no cruzó categorías" (nunca se oculta la evidencia en contra) |
 | `SlotCard` | [N] | **cargando** (skeleton gris) · **resuelto** · **sin candidatos**: caja punteada con el `label` del slot y el motivo dominante de descarte + botón "relajar filtros" · **error** |
 | `ProductRow` | [N] | normal · **sin imagen**: cuadro con la inicial y color por categoría · **disponibilidad desconocida**: badge gris "no verificada" · **señal simulada**: badge ámbar |
+| `ProductCard` | [N] | normal · **marca pedida**: píldora índigo "🏷️ Marca que pediste" (`ProductCardVM.requested_brand`); las tarjetas de otras marcas no llevan nada, no un "otra marca" |
 | `CitationBlock` | [N] | **con cita**: snippet literal entrecomillado + documento + locator, clic abre el documento · **razón estructural**: texto derivado de `component_scores`, con ícono distinto · **sin respaldo documental**: línea gris explícita, nunca vacío |
 | `ScoreBadge` | [N] | oculto en modo cliente salvo hover · visible y descompuesto en Modo Negocio |
 | `AlternativesDrawer` | [S] | colapsado por defecto · 3 alternativas · **sin alternativas**: "no hay otro producto que cumpla los filtros" |
@@ -113,7 +115,22 @@ Una pantalla, un campo, cero fricción. El jurado escribe y pasan cosas.
 
 ### 3.2 Traducción de `ExclusionReason` a lenguaje humano
 
-Tabla fija, sin LLM. Es el 100 % de la feature "explicación del descarte".
+La tabla siguiente queda para diagnósticos y detalle de descartes. En las
+recomendaciones del asesor sólo se muestran productos que pasaron los filtros;
+los slots y categorías sin opciones se omiten. Si no queda ninguna categoría,
+se oculta la sección de recomendaciones.
+
+`app/presentation/advisor_reply.py` formula el mensaje de chat desde el resultado
+real: nombra los tipos de producto, la categoría donde se muestran y el número
+de opciones visibles cuando hay más de una. Los faltantes se explican allí:
+"Por ahora no tengo pañales en stock" si están agotados; si falta verificar un
+dato de compatibilidad, se dice eso sin atribuirlo al stock. No se muestran
+contadores internos de slots agregados, eliminados o reconciliados.
+
+Si el cliente nombró una marca y el producto elegido del slot no es de esa marca
+(`ResolvedSlot.preferred_brand_found is False`), el mensaje agrega "No encontré
+{marca} disponible para {necesidad}; te muestro otras marcas." Si sí la hay, no se
+agrega nada: el chip y la píldora ya lo muestran.
 
 | Código | Texto en pantalla |
 |---|---|
@@ -141,7 +158,7 @@ Toggle en `MissionHeader`. **No navega.** Transforma P2 en sitio.
 │ Impulso marca propia     [─⚫─────────]  0.08                   │
 │ Margen ausente en el dataset — slider deshabilitado ⓘ          │  ← estado degradado
 ├────────────────────────────────────────────────────────────────┤
-│ Ticket S/ 264.50 (+47 %) · Margen ponderado 31.2 % ·           │ ImpactPanel
+│ Ticket $ 264.50 (+47 %) · Margen ponderado 31.2 % ·           │ ImpactPanel
 │ 9 ítems · 3 categorías                                         │
 ├────────────────────────────────────────────────────────────────┤
 │ Bloqueador Marca Propia SPF50                   score 0.745    │

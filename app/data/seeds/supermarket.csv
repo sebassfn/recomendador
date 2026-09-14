@@ -1,0 +1,225 @@
+family_id,subcategory,name,unit,pack_size,base_price,keywords
+001,frutas,Manzana roja fresca,kg,1,6.50,manzana fruta lonchera
+002,frutas,Banana plátano de seda,kg,1,4.00,banana banano platano fruta desayuno
+003,frutas,Naranja de jugo,kg,1,4.50,naranja jugo citrico
+004,frutas,Mandarina fresca,kg,1,5.00,mandarina fruta lonchera
+005,frutas,Limón fresco,kg,0.5,3.00,limon ceviche limonada aderezo
+006,frutas,Piña fresca,unidad,1,7.00,pina fruta jugo
+007,frutas,Papaya fresca,kg,1,5.00,papaya fruta desayuno
+008,frutas,Sandía fresca,kg,1,3.00,sandia fruta
+009,frutas,Melón fresco,unidad,1,7.50,melon fruta
+010,frutas,Fresas frescas,bandeja,1,8.00,fresa frutilla postre
+011,frutas,Uvas sin semillas,kg,0.5,7.00,uva fruta tabla de quesos
+012,frutas,Mango fresco,kg,1,6.00,mango fruta jugo
+013,frutas,Pera fresca,kg,1,7.00,pera fruta lonchera
+014,frutas,Palta aguacate,kg,0.5,6.00,palta aguacate guacamole
+015,verduras,Tomate rojo,kg,1,4.50,tomate ensalada salsa
+016,verduras,Cebolla roja,kg,1,3.50,cebolla aderezo ensalada
+017,verduras,Cebolla blanca,kg,1,3.50,cebolla sofrito
+018,verduras,Ajo entero,malla,1,3.00,ajo aderezo sazon
+019,verduras,Zanahoria fresca,kg,1,3.00,zanahoria sopa ensalada
+020,verduras,Papa blanca,kg,1,3.00,papa patata pure guarnicion
+021,verduras,Papa amarilla,kg,1,4.50,papa pure causa
+022,verduras,Camote batata,kg,1,3.50,camote batata guarnicion
+023,verduras,Yuca fresca,kg,1,4.00,yuca guarnicion asado
+024,verduras,Lechuga fresca,unidad,1,2.50,lechuga ensalada hamburguesa
+025,verduras,Pepino fresco,unidad,1,2.00,pepino ensalada
+026,verduras,Pimiento rojo,unidad,1,2.50,pimiento morron parrilla
+027,verduras,Brócoli fresco,unidad,1,4.50,brocoli verdura guarnicion
+028,verduras,Coliflor fresca,unidad,1,5.00,coliflor verdura
+029,verduras,Espinaca fresca,bolsa,1,3.00,espinaca verdura tortilla
+030,verduras,Zapallo calabaza,kg,1,3.50,zapallo calabaza crema sopa
+031,verduras,Zapallito zucchini,kg,0.5,3.00,zapallito zucchini calabacin parrilla
+032,verduras,Choclo maíz tierno,paquete,2,4.00,choclo maiz guarnicion parrilla
+033,verduras,Champiñones frescos,bandeja,1,6.50,champinones hongos salsa parrilla
+034,verduras,Culantro cilantro fresco,manojo,1,1.50,culantro cilantro hierbas
+035,verduras,Perejil fresco,manojo,1,1.50,perejil chimichurri hierbas
+036,verduras,Apio fresco,manojo,1,2.50,apio sopa caldo
+037,verduras,Ají amarillo fresco,kg,0.25,3.00,aji amarillo aderezo
+038,aves,Pollo entero refrigerado,kg,2,22.00,pollo entero horno asado
+039,aves,Pechuga de pollo fileteada,kg,1,19.00,pechuga pollo filete plancha
+040,aves,Muslos de pollo,kg,1,13.00,muslo pollo guiso horno
+041,aves,Alitas de pollo,kg,1,15.00,alitas pollo barbacoa bbq
+042,aves,Pavo entero congelado,kg,5,105.00,pavo navidad cena fiesta horno
+043,aves,Pechuga de pavo,kg,1,29.00,pechuga pavo horno
+044,res,Bistec de res,kg,1,30.00,bistec res carne plancha
+045,res,Carne molida de res,kg,0.5,14.00,carne molida hamburguesa albondigas lasana
+046,res,Costilla de res para asado,kg,1,32.00,costilla res asado parrilla
+047,res,Picaña de res para parrilla,kg,1,48.00,picana picanha res asado parrilla
+048,res,Lomo fino de res,kg,1,60.00,lomo fino solomillo res cena especial
+049,res,Carne de res para estofado,kg,1,27.00,res carne estofado guiso
+050,res,Asado de tira de res,kg,1,38.00,asado tira res parrilla
+051,res,Hamburguesas de res paquete x4,paquete,4,18.00,hamburguesa res parrilla
+052,cerdo,Chuleta de cerdo,kg,1,22.00,chuleta cerdo parrilla
+053,cerdo,Costillas de cerdo,kg,1,28.00,costilla cerdo bbq asado
+054,cerdo,Panceta de cerdo,kg,1,25.00,panceta cerdo chicharron
+055,cerdo,Lomo de cerdo,kg,1,29.00,lomo cerdo horno cena
+056,cerdo,Pierna de cerdo para horno,kg,3,66.00,pierna pernil cerdo fiesta navidad
+057,cerdo,Brochetas de cerdo,paquete,4,18.00,brocheta cerdo parrilla
+058,pescados,Filete de merluza,kg,0.5,15.00,merluza pescado filete
+059,pescados,Filete de salmón,kg,0.5,35.00,salmon pescado cena especial
+060,pescados,Trucha entera,kg,1,25.00,trucha pescado horno
+061,pescados,Filete de pescado blanco para ceviche,kg,0.5,22.00,pescado ceviche filete
+062,pescados,Atún fresco en filetes,kg,0.5,24.00,atun pescado filete
+063,mariscos,Camarones pelados congelados,kg,0.5,28.00,camaron langostino marisco arroz
+064,mariscos,Calamar limpio congelado,kg,0.5,18.00,calamar marisco
+065,mariscos,Mejillones congelados,kg,0.5,16.00,mejillon choros marisco
+066,embutidos,Chorizo parrillero,kg,0.5,14.00,chorizo parrilla asado choripan
+067,embutidos,Salchicha tipo hot dog,paquete,6,8.00,salchicha hot dog fiesta
+068,embutidos,Jamón cocido rebanado,kg,0.2,8.00,jamon sandwich desayuno
+069,embutidos,Jamón de pavo rebanado,kg,0.2,10.00,jamon pavo sandwich
+070,embutidos,Tocino ahumado,kg,0.2,10.00,tocino bacon desayuno hamburguesa
+071,embutidos,Salami rebanado,kg,0.15,12.00,salami picada tabla embutidos
+072,embutidos,Morcilla para parrilla,kg,0.5,12.00,morcilla parrilla asado
+073,embutidos,Jamón serrano,kg,0.1,16.00,jamon serrano tabla aperitivo
+074,lacteos,Leche entera 1L,L,1,4.50,leche desayuno
+075,lacteos,Leche descremada 1L,L,1,5.00,leche descremada desayuno
+076,lacteos,Leche sin lactosa 1L,L,1,5.50,leche sin lactosa deslactosada
+077,lacteos,Yogur natural 1L,L,1,7.00,yogur yogurt desayuno
+078,lacteos,Yogur de fresa 1L,L,1,7.50,yogur yogurt fresa
+079,lacteos,Queso fresco 500g,kg,0.5,12.00,queso fresco desayuno
+080,lacteos,Queso mozzarella 250g,kg,0.25,10.00,queso mozzarella pizza lasana
+081,lacteos,Queso cheddar rebanado 200g,kg,0.2,9.00,queso cheddar hamburguesa
+082,lacteos,Queso parmesano rallado 100g,kg,0.1,8.00,queso parmesano pasta
+083,lacteos,Queso crema 200g,kg,0.2,8.00,queso crema cheesecake
+084,lacteos,Mantequilla 200g,kg,0.2,7.00,mantequilla reposteria desayuno
+085,lacteos,Crema de leche 200ml,L,0.2,5.00,crema leche salsa postre
+086,huevos,Huevos de gallina docena,paquete,12,9.00,huevo desayuno tortilla reposteria
+087,huevos,Huevos de gallina bandeja x30,paquete,30,20.00,huevo desayuno tortilla
+088,panaderia,Pan de molde blanco 500g,paquete,1,6.00,pan sandwich desayuno
+089,panaderia,Pan integral 500g,paquete,1,7.50,pan integral sandwich
+090,panaderia,Pan para hamburguesas x6,paquete,6,6.00,pan hamburguesa fiesta
+091,panaderia,Pan para hot dog x6,paquete,6,5.00,pan hot dog choripan
+092,panaderia,Pan baguette,unidad,1,3.00,pan baguette ajo aperitivo
+093,panaderia,Tortillas de trigo x8,paquete,8,7.00,tortilla trigo tacos fajitas
+094,panaderia,Tostadas de pan 200g,paquete,1,4.50,tostada desayuno aperitivo
+095,granos,Arroz blanco 1kg,kg,1,4.50,arroz blanco guarnicion despensa
+096,granos,Arroz integral 1kg,kg,1,6.00,arroz integral grano
+097,granos,Azúcar blanca 1kg,kg,1,4.00,azucar blanca reposteria despensa
+098,granos,Azúcar rubia 1kg,kg,1,4.50,azucar rubia morena
+099,granos,Sal de mesa 1kg,kg,1,2.00,sal fina sazon despensa
+100,granos,Sal gruesa parrillera 1kg,kg,1,3.50,sal gruesa parrilla asado
+101,granos,Frijol canario seco 1kg,kg,1,8.00,frijol frejol menestra poroto
+102,granos,Frijol negro seco 1kg,kg,1,8.00,frijol negro menestra poroto
+103,granos,Garbanzos secos 1kg,kg,1,8.50,garbanzo menestra hummus
+104,granos,Lentejas secas 500g,kg,0.5,3.50,lenteja menestra guiso
+105,granos,Arvejas partidas secas 500g,kg,0.5,3.00,arveja guisante sopa
+106,granos,Quinua blanca 500g,kg,0.5,7.00,quinua quinoa grano
+107,granos,Avena en hojuelas 500g,kg,0.5,4.00,avena desayuno cereal
+108,granos,Maíz para palomitas 500g,kg,0.5,3.50,maiz palomitas canguil canchita fiesta
+109,harinas,Harina de trigo 1kg,kg,1,4.00,harina trigo pan reposteria
+110,harinas,Harina de maíz 1kg,kg,1,5.00,harina maiz arepa tortilla
+111,harinas,Maicena fécula de maíz 200g,kg,0.2,3.00,maicena fecula salsa postre
+112,pastas,Fideos espagueti 500g,kg,0.5,3.50,fideo espagueti spaghetti pasta
+113,pastas,Pasta penne macarrones 500g,kg,0.5,4.00,penne macarron pasta
+114,pastas,Láminas de lasaña 250g,kg,0.25,6.00,lasana lasagna pasta horno
+115,pastas,Fideos para sopa 250g,kg,0.25,2.00,fideo sopa caldo
+116,conservas,Atún en conserva 170g,lata,1,5.00,atun conserva ensalada sandwich
+117,conservas,Sardinas en tomate 155g,lata,1,4.00,sardina conserva pescado
+118,conservas,Maíz dulce en conserva 300g,lata,1,4.50,maiz choclo ensalada
+119,conservas,Arvejas en conserva 300g,lata,1,4.00,arveja guisante ensalada
+120,conservas,Duraznos en almíbar 820g,lata,1,8.00,durazno almibar postre
+121,conservas,Aceitunas verdes 250g,frasco,1,6.00,aceituna aperitivo ensalada
+122,conservas,Pepinillos en vinagre 250g,frasco,1,6.00,pepinillo encurtido hamburguesa
+123,aceites,Aceite de girasol 1L,L,1,8.00,aceite girasol vegetal freir
+124,aceites,Aceite de oliva 500ml,L,0.5,18.00,aceite oliva ensalada aderezo
+125,aceites,Vinagre blanco 500ml,L,0.5,3.00,vinagre blanco aderezo
+126,aceites,Vinagre balsámico 250ml,L,0.25,8.00,vinagre balsamico ensalada
+127,condimentos,Pimienta negra molida 50g,frasco,1,3.50,pimienta sazon condimento
+128,condimentos,Comino molido 50g,frasco,1,3.00,comino sazon condimento
+129,condimentos,Orégano seco 25g,frasco,1,2.50,oregano pizza condimento
+130,condimentos,Paprika pimentón 50g,frasco,1,3.50,paprika pimenton adobo
+131,condimentos,Ajo en polvo 50g,frasco,1,3.00,ajo polvo sazon
+132,condimentos,Laurel seco 10g,sobre,1,2.00,laurel guiso estofado
+133,condimentos,Romero seco 20g,frasco,1,3.00,romero asado horno
+134,condimentos,Canela molida 30g,frasco,1,3.00,canela postre reposteria
+135,condimentos,Clavo de olor 20g,sobre,1,2.50,clavo olor postre
+136,condimentos,Curry en polvo 50g,frasco,1,4.00,curry pollo condimento
+137,condimentos,Caldo de pollo en cubos x12,caja,12,4.00,caldo pollo sopa sazon
+138,condimentos,Sazonador para carnes 100g,frasco,1,4.00,sazonador carne parrilla adobo
+139,salsas,Salsa de tomate para pasta 400g,frasco,1,5.00,salsa tomate pasta pizza
+140,salsas,Pasta concentrada de tomate 160g,lata,1,3.00,pasta tomate concentrado tuco
+141,salsas,Ketchup salsa de tomate 400g,envase,1,5.00,ketchup catsup hamburguesa hot dog
+142,salsas,Mayonesa 400g,envase,1,6.00,mayonesa sandwich ensalada
+143,salsas,Mostaza 200g,envase,1,4.00,mostaza hot dog hamburguesa
+144,salsas,Salsa barbacoa BBQ 350g,envase,1,7.00,salsa bbq barbacoa costilla alitas
+145,salsas,Chimichurri 200g,frasco,1,6.00,chimichurri asado parrilla
+146,salsas,Salsa de soya sillao 500ml,L,0.5,5.00,soya soja sillao chaufa
+147,salsas,Salsa inglesa 150ml,L,0.15,6.00,salsa inglesa marinada carne
+148,salsas,Salsa de ají picante 150g,frasco,1,4.00,aji picante salsa
+149,salsas,Salsa huancaína 200g,envase,1,6.00,huancaina papa salsa
+150,salsas,Pesto de albahaca 180g,frasco,1,9.00,pesto albahaca pasta
+151,salsas,Salsa tártara 200g,envase,1,5.00,tartara pescado salsa
+152,reposteria,Chocolate para repostería 200g,tableta,1,8.00,chocolate cobertura torta pastel
+153,reposteria,Cacao en polvo 150g,envase,1,6.00,cacao chocolate reposteria
+154,reposteria,Polvo de hornear 100g,envase,1,3.00,polvo hornear torta pastel
+155,reposteria,Esencia de vainilla 100ml,L,0.1,3.00,vainilla reposteria postre
+156,reposteria,Leche condensada 393g,lata,1,6.00,leche condensada postre
+157,reposteria,Gelatina de fresa 150g,caja,1,3.00,gelatina postre cumpleanos
+158,reposteria,Crema para batir 500ml,L,0.5,10.00,crema chantilly torta pastel
+159,reposteria,Azúcar impalpable 500g,kg,0.5,5.00,azucar impalpable glas reposteria
+160,reposteria,Pasas de uva 200g,bolsa,1,5.00,pasa arroz navideno postre
+161,reposteria,Nueces peladas 200g,bolsa,1,10.00,nuez frutos secos reposteria
+162,reposteria,Panetón navideño 900g,unidad,1,18.00,paneton panettone navidad fiesta
+163,reposteria,Torta de chocolate para 12 porciones,unidad,1,45.00,torta pastel chocolate cumpleanos
+164,desayuno,Café molido 250g,bolsa,1,12.00,cafe desayuno
+165,desayuno,Café instantáneo 100g,frasco,1,10.00,cafe soluble desayuno
+166,desayuno,Té negro x25,caja,25,4.00,te infusion desayuno
+167,desayuno,Manzanilla x25,caja,25,4.00,manzanilla infusion
+168,desayuno,Cereal de maíz 300g,caja,1,8.00,cereal hojuelas desayuno
+169,desayuno,Granola 400g,bolsa,1,10.00,granola desayuno cereal
+170,desayuno,Mermelada de fresa 250g,frasco,1,5.00,mermelada fresa desayuno
+171,desayuno,Miel de abeja 250g,frasco,1,9.00,miel desayuno
+172,desayuno,Mantequilla de maní 250g,frasco,1,8.00,mantequilla mani crema cacahuate
+173,snacks,Papas fritas 150g,bolsa,1,5.00,papas fritas snack piqueo fiesta
+174,snacks,Nachos de maíz 200g,bolsa,1,5.00,nachos totopos snack
+175,snacks,Maní tostado 200g,bolsa,1,4.00,mani cacahuate piqueo
+176,snacks,Galletas saladas 200g,paquete,1,3.50,galleta salada aperitivo
+177,snacks,Galletas dulces surtidas 300g,paquete,1,5.00,galleta dulce lonchera
+178,snacks,Chocolate en barra 100g,tableta,1,5.00,chocolate dulce
+179,snacks,Gomitas de frutas 200g,bolsa,1,4.00,gomita golosina cumpleanos fiesta
+180,congelados,Papas prefritas congeladas 1kg,kg,1,10.00,papas fritas congeladas guarnicion
+181,congelados,Verduras mixtas congeladas 500g,kg,0.5,6.00,verdura congelada guarnicion
+182,congelados,Arvejas congeladas 500g,kg,0.5,5.00,arveja guisante congelado
+183,congelados,Nuggets de pollo 500g,kg,0.5,12.00,nuggets pollo bocadito
+184,congelados,Pizza mozzarella congelada 400g,unidad,1,14.00,pizza mozzarella congelada
+185,congelados,Helado de vainilla 1L,L,1,12.00,helado vainilla postre fiesta
+186,congelados,Helado de chocolate 1L,L,1,12.00,helado chocolate postre
+187,congelados,Hielo en cubos 3kg,kg,3,5.00,hielo bebida coctel cooler
+188,bebidas,Agua sin gas 2.5L,L,2.5,3.50,agua hidratacion bebida
+189,bebidas,Agua con gas 1L,L,1,3.00,agua gas bebida
+190,bebidas,Gaseosa cola 2L,L,2,6.00,gaseosa cola refresco bebida
+191,bebidas,Gaseosa de limón 2L,L,2,6.00,gaseosa limon refresco bebida
+192,bebidas,Néctar de durazno 1L,L,1,4.50,nectar jugo durazno bebida
+193,bebidas,Jugo de naranja 1L,L,1,6.00,jugo naranja desayuno bebida
+194,bebidas,Chicha morada 1L,L,1,5.00,chicha morada bebida refresco
+195,bebidas,Limonada 1L,L,1,4.50,limonada bebida refresco
+196,bebidas,Agua tónica 1L,L,1,5.00,agua tonica mixer coctel
+197,bebidas,Bebida de avena 1L,L,1,8.00,bebida avena vegetal desayuno
+198,bebidas,Bebida de almendras 1L,L,1,9.00,bebida almendra vegetal desayuno
+199,licores,Cerveza lager pack 6x355ml,paquete,6,22.00,cerveza lager bebida alcohol
+200,licores,Cerveza artesanal 330ml,L,0.33,9.00,cerveza artesanal bebida alcohol
+201,licores,Vino tinto cabernet 750ml,L,0.75,28.00,vino tinto cabernet carne asado
+202,licores,Vino blanco sauvignon 750ml,L,0.75,28.00,vino blanco sauvignon pescado
+203,licores,Vino espumante brut 750ml,L,0.75,35.00,vino espumante brindis fiesta
+204,licores,Ron añejo 750ml,L,0.75,38.00,ron anejo coctel
+205,licores,Whisky 750ml,L,0.75,65.00,whisky whiskey licor
+206,licores,Vodka 750ml,L,0.75,35.00,vodka licor coctel
+207,licores,Gin 700ml,L,0.7,48.00,gin ginebra licor coctel
+208,licores,Pisco 750ml,L,0.75,35.00,pisco sour coctel
+209,licores,Tequila 750ml,L,0.75,50.00,tequila margarita coctel
+210,limpieza,Lavavajillas líquido 750ml,L,0.75,6.00,lavavajillas lavaplatos detergente cocina
+211,limpieza,Esponjas de cocina x3,paquete,3,3.00,esponja cocina limpieza
+212,limpieza,Lejía cloro 1L,L,1,3.00,lejia cloro limpieza
+213,limpieza,Suavizante de ropa 1L,L,1,7.00,suavizante ropa lavado
+214,limpieza,Desengrasante de cocina 500ml,L,0.5,6.00,desengrasante cocina parrilla
+215,limpieza,Papel toalla de cocina x2,paquete,2,5.00,papel toalla cocina limpieza
+216,higiene,Pasta dental 100ml,unidad,1,5.00,pasta dental dentifrico higiene
+217,higiene,Champú familiar 750ml,L,0.75,12.00,champu shampoo higiene
+218,higiene,Jabón de baño x3,paquete,3,5.00,jabon bano higiene
+219,higiene,Toallas higiénicas x10,paquete,10,6.00,toalla higienica cuidado personal
+220,bebes,Pañales talla M x30,paquete,30,25.00,panal bebe talla m
+221,bebes,Toallitas húmedas x80,paquete,80,7.00,toallita humeda bebe
+222,mascotas,Alimento seco para perro adulto 3kg,kg,3,25.00,alimento perro mascota croqueta
+223,mascotas,Alimento seco para gato adulto 1kg,kg,1,16.00,alimento gato mascota croqueta
+224,mascotas,Arena sanitaria para gatos 5kg,kg,5,18.00,arena gato sanitaria mascota

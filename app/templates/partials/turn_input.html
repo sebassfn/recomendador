@@ -1,0 +1,11 @@
+{#- Turno libre de conversación. Postea a /turn sin `action`: sólo el LLM puede
+    interpretarlo, y si no responde, el asistente lo dice y la canasta no cambia. -#}
+<form hx-post="/mission/{{ vm.mission_id }}/turn"
+      hx-disabled-elt="find button"
+      class="sticky bottom-20 md:bottom-4 z-10 bg-white rounded-2xl border border-slate-200 shadow-sm p-2 flex items-center gap-2">
+  <label for="turn-text" class="sr-only">Pídeme un ajuste</label>
+  <input id="turn-text" name="text" type="text" maxlength="500" autocomplete="off" required
+         placeholder="Escribe un ajuste… ej: somos 6, agrega protector para el auto"
+         class="flex-1 min-w-0 min-h-[44px] px-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-300 text-sm" />
+  <button type="submit" class="shrink-0 w-11 h-11 rounded-full bg-blue-600 text-white hover:bg-blue-700 flex items-center justify-center" aria-label="Enviar">➤</button>
+</form>

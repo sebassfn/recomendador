@@ -1,0 +1,20 @@
+[
+  {"key":"size","label":"talla","aliases":["talla"],"kind":"text","name_pattern":"\\btalla\\s+(?P<value>[A-Za-z0-9]+)\\b"},
+  {"key":"tire_size","label":"medida de llanta","aliases":["medida_llanta"],"kind":"text"},
+  {"key":"viscosity","label":"viscosidad","aliases":["viscosidad"],"kind":"text"},
+  {"key":"voltage","label":"voltaje","aliases":["voltaje"],"kind":"number","unit":"V","unit_factors":{"v":1}},
+  {"key":"capacity_l","label":"capacidad","aliases":["capacidad_l"],"kind":"number","unit":"L","unit_factors":{"l":1,"ml":0.001}},
+  {"key":"capacity_people","label":"capacidad de personas","aliases":[],"kind":"number"},
+  {"key":"spf","label":"factor de protección solar","aliases":["fps"],"kind":"number"},
+  {"key":"length_cm","label":"longitud","aliases":["largo_cm"],"kind":"number","unit":"cm","unit_factors":{"cm":1,"m":100,"mm":0.1}},
+  {"key":"width_cm","label":"ancho","aliases":["ancho_cm"],"kind":"number","unit":"cm","unit_factors":{"cm":1,"m":100,"mm":0.1}},
+  {"key":"material","label":"material","aliases":[],"kind":"text"},
+  {"key":"color","label":"color","aliases":[],"kind":"text"},
+  {"key":"supported_weight_kg","label":"peso admitido","aliases":["peso_admitido_kg"],"kind":"range","unit":"kg","unit_factors":{"kg":1,"g":0.001},"minimum_attribute":"min_weight_kg","maximum_attribute":"max_weight_kg"},
+  {"key":"supported_age_months","label":"edad admitida","aliases":["edad_admitida_meses"],"kind":"range","unit":"meses","unit_factors":{"mes":1,"meses":1,"año":12,"años":12},"minimum_attribute":"min_age_months","maximum_attribute":"max_age_months"},
+  {"key":"units_per_pack","label":"unidades por pack","aliases":["unidades_por_paquete","cantidad_por_paquete"],"kind":"number"},
+  {"key":"volume_ml","label":"volumen","aliases":["volumen_ml"],"kind":"number","unit":"ml","unit_factors":{"ml":1,"l":1000}},
+  {"key":"flavor","label":"sabor","aliases":["sabor"],"kind":"text"},
+  {"key":"sugar_free","label":"sin azúcar","aliases":["sin_azucar"],"kind":"text"},
+  {"key":"container_type","label":"envase","aliases":["envase","tipo_envase"],"kind":"text"}
+]

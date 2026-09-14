@@ -5,5 +5,42 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "anthropic>=1.5.0",
+    "fastapi>=0.141.1",
+    "google-cloud-firestore>=2.30.0",
+    "jinja2>=3.1.6",
+    "langchain-anthropic>=1.7.2",
+    "langchain-core>=1.6.3",
+    "langgraph>=1.2.11",
+    "langsmith>=0.12.4",
     "pydantic>=2.13.5",
+    "pydantic-settings>=2.15.0",
+    "python-multipart>=0.0.32",
+    "uvicorn[standard]>=0.52.4",
 ]
+
+# Dependencias por proveedor LLM (app/llm/providers/), instaladas sólo si se
+# va a usar ese proveedor -- ver app/llm/factory.py. `anthropic` es el default
+# del stack (CLAUDE.md) y por eso vive en `dependencies`, no acá.
+# `openrouter` no necesita ningún extra: está implementado sólo con stdlib.
+[project.optional-dependencies]
+google = ["google-genai>=2.23.0"]
+# Sólo si un rol del agente (app/agent/llm/) se configura con
+# AGENT_LLM_PROVIDER=google -- ver app/agent/llm/providers.py.
+agent-google = ["langchain-google-genai>=2.0.0"]
+# Sólo si un rol del agente (app/agent/llm/) se configura con
+# AGENT_LLM_PROVIDER=openrouter -- ver app/agent/llm/providers.py. OpenRouter
+# no tiene SDK propio de LangChain, se instancia como ChatOpenAI apuntando a
+# su base_url (es compatible con la API de OpenAI).
+agent-openrouter = ["langchain-openai>=1.0.0"]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+asyncio_mode = "auto"
+markers = ["firestore: requiere FIRESTORE_EMULATOR_HOST (ver app/agent/README.md)"]
