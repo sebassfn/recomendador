@@ -30,9 +30,6 @@ jobs:
       - name: Generar catalogo
         run: |
           uv run python scripts/seed_catalog.py
-
-      - name: Generar catalogo
-        run: |
           uv run python scripts/expand_catalog.py
 
       - name: Autenticarse en Google Cloud
