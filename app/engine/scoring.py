@@ -473,6 +473,30 @@ def _keyword_in(keyword_tokens: Sequence[str], haystack_tokens: Sequence[str]) -
     )
 
 
+# Palabras que no cuentan para decidir si una keyword multi-palabra "aparece"
+# en el texto de un producto ("vegetales para asar" vs. "verduras para asar
+# a la parrilla" no deberían fallar sólo porque "para" no es la señal real).
+_STOPWORDS = frozenset({"de", "del", "la", "el", "los", "las", "para", "con", "sin", "y", "o", "en", "a"})
+
+# Fracción mínima de palabras significativas de una keyword que debe
+# aparecer (en cualquier orden, palabra completa) para considerarla presente.
+# Con keywords de una sola palabra esto no cambia nada (1/1): el umbral sólo
+# le da margen a frases donde el LLM y el catálogo describen lo mismo con
+# sinónimos parciales ("hamburguesa vegetariana" / "hamburguesa de vegetales").
+MIN_TEXT_OVERLAP = 0.5
+
+
+def _keyword_overlap(keyword_tokens: Sequence[str], haystack_tokens: Sequence[str]) -> float:
+    """Fracción de palabras significativas de la keyword presentes como
+    palabra completa (o plural regular, ver `_same_word`) en el texto,
+    en cualquier orden. 1.0 si coincide toda la frase; 0.0 si ninguna."""
+    significant = [t for t in keyword_tokens if t not in _STOPWORDS] or list(keyword_tokens)
+    if not significant:
+        return 0.0
+    hits = sum(1 for token in significant if any(_same_word(token, h) for h in haystack_tokens))
+    return hits / len(significant)
+
+
 def matches_slot_text(product: Product, slot: BasketSlot) -> bool:
     """Mismo criterio léxico del ranking, también para acotar diagnósticos.
 
@@ -481,14 +505,14 @@ def matches_slot_text(product: Product, slot: BasketSlot) -> bool:
     if not slot.keywords:
         return True
     haystack = _tokens(" ".join(filter(None, [product.name, product.description, product.brand])))
-    return any(_keyword_in(_tokens(keyword), haystack) for keyword in slot.keywords)
+    return any(_keyword_overlap(_tokens(keyword), haystack) >= MIN_TEXT_OVERLAP for keyword in slot.keywords)
 
 
 def _text_matches(slot: BasketSlot, candidates: Sequence[Product]) -> dict[str, float]:
     """`text_match` de todos los candidatos de un slot, en una sola pasada:
-    coincidencias de keywords / máximo de coincidencias del set.
+    mejor solapamiento de keyword / máximo solapamiento del set.
 
-    La coincidencia es por palabra completa (ver `_keyword_in`), no por
+    La coincidencia es por palabra completa (ver `_keyword_overlap`), no por
     substring: con `kw in haystack`, la keyword "aseo" encontraba "gaseosa",
     la gaseosa pasaba el filtro de texto y ganaba el slot "aseo del bebé" por
     margen."""
@@ -496,15 +520,15 @@ def _text_matches(slot: BasketSlot, candidates: Sequence[Product]) -> dict[str, 
         return {c.product_id: 1.0 for c in candidates}
 
     keyword_tokens = [_tokens(kw) for kw in slot.keywords]
-    counts = {}
+    overlaps = {}
     for c in candidates:
         haystack = _tokens(" ".join(filter(None, [c.name, c.description, c.brand])))
-        counts[c.product_id] = sum(1 for kt in keyword_tokens if _keyword_in(kt, haystack))
+        overlaps[c.product_id] = max((_keyword_overlap(kt, haystack) for kt in keyword_tokens), default=0.0)
 
-    max_count = max(counts.values(), default=0)
-    if max_count == 0:
-        return {pid: 0.0 for pid in counts}
-    return {pid: n / max_count for pid, n in counts.items()}
+    max_overlap = max(overlaps.values(), default=0.0)
+    if max_overlap == 0.0:
+        return {pid: 0.0 for pid in overlaps}
+    return {pid: n / max_overlap for pid, n in overlaps.items()}
 
 
 def _default_category_match(product: Product, slot: BasketSlot) -> float:

@@ -335,6 +335,20 @@ def test_keyword_no_coincide_dentro_de_otra_palabra():
     assert res["kit"].is_recommended
 
 
+def test_keyword_multipalabra_tolera_sinonimo_parcial():
+    """La mitad (o más) de las palabras significativas de la keyword alcanza:
+    "vegetales para asar" matchea "Verduras mixtas para asar" (comparten
+    "para" y "asar"; "para" es stopword y no cuenta, "asar" sí). No debe
+    matchear un producto que sólo comparte una palabra de relleno."""
+    verduras = make_product("verduras", name="Verduras mixtas para asar a la parrilla")
+    solo_relleno = make_product("solo-relleno", name="Salsa para pastas")
+
+    res = _by_id(score_slot([verduras, solo_relleno], _slot("vegetales para asar"), ScoringWeights()))
+
+    assert res["verduras"].is_recommended
+    assert res["solo-relleno"].excluded_reason is ExclusionReason.NO_TEXT_MATCH
+
+
 def test_keyword_ignora_tildes_y_mayusculas():
     toallitas = make_product("t", name="Toallitas Húmedas x80")
 

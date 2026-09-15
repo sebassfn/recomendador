@@ -33,6 +33,7 @@ from app.agent import AgentService, ClarificationAnswer, ClarificationRequest
 from app.domain.schema import Basket, Category, MissionPlan, MissionPlanDraft, ScoringWeights
 from app.engine.scoring import apply_sliders
 from app.mission_agent import bridge
+from app.mission_agent.catalog_feedback import build_retry_hint
 from app.mission_agent.keyword_fallback import fallback_plan
 from app.mission_agent.snapshot import build_snapshot
 from app.presentation import cart as cart_ops
@@ -53,6 +54,13 @@ INTERPRETED_BY_DETAIL = {
 # promo, `apply_sliders` da relevance = 1.0. Es genuinamente distinto del
 # default (50 % relevancia) y usa la API del motor sin tocarla.
 PURE_RELEVANCE = apply_sliders(margin=0.0, turnover=0.0, private_label=0.0, promo=0.0)
+
+# Cuántas veces se le da al agente la chance de reformular un slot obligatorio
+# que el filtro duro dejó sin producto, antes de resignarse a mostrarlo vacío.
+# Acotado y separado del presupuesto interno del grafo (`AGENT_MAX_ITERATIONS`):
+# cada intento acá es un turno completo de `revise_mission`, no una iteración
+# del orquestador.
+MAX_CATALOG_RETRIES = 1
 
 
 def _with_budget(mission: MissionPlan, budget: Decimal | None) -> MissionPlan:
@@ -94,21 +102,69 @@ def _resolve_clarification_answer(session: MissionSession, text: str) -> Clarifi
     return ClarificationAnswer(free_text=text)
 
 
-def _rebuild(
+async def _resolve_with_catalog_retry(
+    agent: AgentService,
+    conn: sqlite3.Connection,
+    mission: MissionPlan,
+    *,
+    user_id: str,
+    agent_session_id: str,
+    weights: ScoringWeights | None = None,
+) -> tuple[MissionPlan, Basket]:
+    """Resuelve la canasta y, si algún slot obligatorio quedó sin producto,
+    le da al agente hasta `MAX_CATALOG_RETRIES` turnos para reformular ESE
+    slot (otras keywords o categoría) antes de resignarse.
+
+    Lo que vuelve al agente es sólo texto (`build_retry_hint`): slot_id,
+    label, las keywords que el propio LLM ya había propuesto y el motivo
+    estructural del descarte. Nunca productos ni precios (CLAUDE.md regla 6)
+    -- el filtro duro y el ranking siguen corriendo acá, en Python, cada vez
+    que el plan cambia.
+    """
+    basket = resolve_mission(conn, mission, weights)
+    for _ in range(MAX_CATALOG_RETRIES):
+        hint = build_retry_hint(basket)
+        if hint is None:
+            break
+        result = await bridge.revise_mission(
+            agent,
+            user_id=user_id,
+            agent_session_id=agent_session_id,
+            previous_plan=mission,
+            text=hint,
+            snapshot=None,
+        )
+        if result.plan is None:
+            break
+        mission = result.plan
+        basket = resolve_mission(conn, mission, weights)
+    return mission, basket
+
+
+async def _rebuild(
     session: MissionSession,
     conn: sqlite3.Connection,
+    agent: AgentService,
     mission: MissionPlan,
     weights: ScoringWeights | None = None,
 ) -> tuple[int, int]:
-    """Re-resuelve la misión y reconcilia el carrito.
+    """Re-resuelve la misión (con reintento de catálogo) y reconcilia el carrito.
 
     - Líneas cuyo producto ya no está en el pool de su slot: se podan.
     - Slots nuevos (o que se quedaron sin línea): reciben su `picked`.
 
     Devuelve (líneas podadas, líneas agregadas) para que el turno lo cuente.
     """
+    mission, basket = await _resolve_with_catalog_retry(
+        agent,
+        conn,
+        mission,
+        user_id=session.user_id,
+        agent_session_id=session.agent_session_id,
+        weights=weights or session.basket.weights,
+    )
     session.mission = mission
-    session.basket = resolve_mission(conn, mission, weights or session.basket.weights)
+    session.basket = basket
     return _reconcile_cart(session)
 
 
@@ -164,7 +220,16 @@ async def start_mission(
             budget,
         )
 
-    basket = resolve_mission(conn, mission)
+    if result.clarification is None:
+        # Sólo vale la pena gastar un turno de reintento de catálogo si esta
+        # canasta es la que de verdad se va a mostrar. Con aclaración pendiente
+        # la canasta de acá abajo es sólo un resguardo para que la pantalla no
+        # quede vacía -- lo que se le dice al cliente es la pregunta, no esto.
+        mission, basket = await _resolve_with_catalog_retry(
+            agent, conn, mission, user_id=user_id, agent_session_id=result.agent_session_id
+        )
+    else:
+        basket = resolve_mission(conn, mission)
     session = MissionSession(
         mission_id=new_mission_id(mission),
         mission=mission,
@@ -297,7 +362,7 @@ async def apply_turn(
 
     deterministic = _deterministic_revision(session.mission, action)
     if deterministic is not None:
-        _apply_revision(session, conn, text, deterministic, detail=None)
+        await _apply_revision(session, conn, agent, text, deterministic, detail=None)
         return
 
     # Si había una aclaración pendiente, este texto la responde -- no es un
@@ -344,13 +409,18 @@ async def apply_turn(
     detail = INTERPRETED_BY_DETAIL.get(revised.interpreted_by)
     if result.warnings:
         detail = f"{detail} ({'; '.join(result.warnings)})" if detail else "; ".join(result.warnings)
-    _apply_revision(session, conn, text, revised, detail=detail)
+    await _apply_revision(session, conn, agent, text, revised, detail=detail)
 
 
-def _apply_revision(
-    session: MissionSession, conn: sqlite3.Connection, text: str, revised: MissionPlan, detail: str | None
+async def _apply_revision(
+    session: MissionSession,
+    conn: sqlite3.Connection,
+    agent: AgentService,
+    text: str,
+    revised: MissionPlan,
+    detail: str | None,
 ) -> None:
-    _rebuild(session, conn, revised)
+    await _rebuild(session, conn, agent, revised)
     reply = recommendation_reply(session.basket)
     _say(session, text, reply, detail)
 
