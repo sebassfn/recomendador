@@ -26,5 +26,5 @@ ENV PATH="/app/.venv/bin:${PATH}"
 
 EXPOSE 8080
 
-# Cloud Run inyecta $PORT; nunca se hardcodea 8080 (doc 07 §5.3).
-CMD ["sh", "-c", "exec python -m uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8080}"]
+# Cloud Run inyecta $PORT1; nunca se hardcodea 8080 (doc 07 §5.3).
+CMD ["sh", "-c", "exec python -m uvicorn app.main:app --host 0.0.0.0 --port ${PORT1:-8080}"]
